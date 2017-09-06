@@ -1,33 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-  <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">NIIT E-COMMERCE PORTAL</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="Basket.html">Basket</a></li>
-      
-    </ul>
-  </div>
-</nav>
+<jsp:include page="header.jsp"></jsp:include>
+<body>
 
 <div class="jumbotron text-left" style="padding-left:10px;">
   <h3>NIIT E-COMMERCE PORTAL</h3>
   <p>Welcome to the home of all things in NIIT</p> 
 </div>
-</head>
-<body>
-
 <div class="container">
 <div class="alert alert-info">
     <strong>Info!</strong> Currently your basket contains 0 product(s).
@@ -48,18 +25,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><a href="#">Product1</a></td>
-        <td>100.00</td>
-        
+        <td class="col-md-10"><a href="addtobasket.jsp">Product1</a></td>
+        <td class="col-md-12">100.00</td>
       </tr>
+	   
 	   <tr>
-        <td><a href="#">Product1</a></td>
-        <td>100.00</td>
-        
+        <td class="col-md-10"><a href="addtobasket.jsp">Product1</a></td>
+        <td class="col-md-12">100.00</td>
       </tr>
-	  <tr>
-        <td><a href="#">Product1</a></td>
-        <td>100.00</td>
+      <tr>
+        <td class="col-md-10"><a href="addtobasket.jsp">Product1</a></td>
+        <td class="col-md-12">100.00</td>
+      </tr>
         
       </tr>
     </tbody>
@@ -68,11 +45,5 @@
 
 
 
-<div class="footer-bottom" style="padding-left:10px;">
-        <div class="container">
-            <p class="pull-left"> Copyright © NIIT E-COMMERCE PORTAL 2017</p>
-            
-        </div>
-    </div>
-</body>
-</html>
+<jsp:include page="footer.jsp"></jsp:include>
+ 
