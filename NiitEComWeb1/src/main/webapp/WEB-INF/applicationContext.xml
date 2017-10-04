@@ -1,0 +1,75 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:tx="http://www.springframework.org/schema/tx"
+
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<context:annotation-config/>
+<context:component-scan base-package="com.niit.ecomweb1" />
+
+<!-- Configure JDBC Connection-->
+      <bean id="dataSource"
+            class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="org.h2.Driver" />
+            <property name="url" value="jdbc:h2:tcp://localhost/~/subhadeepdas93_2" />
+            <property name="username" value="sa" />
+            <property name="password" value="sa" />
+      </bean>
+
+
+ <!-- Configure Hibernate 4 Session Facotry -->
+      <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+      <property name="dataSource">
+            <ref bean="dataSource" />
+      </property>
+      <property name="hibernateProperties">
+            <props>
+                  <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                  <prop key="hibernate.show_sql">true</prop>
+                  <prop key="hibernate.hbm2ddl.auto">update</prop> 
+                  
+            </props>
+      </property>
+      
+      <property name="annotatedClasses">
+            <list>
+                  <value>com.niit.ecomweb1.model.Address</value>
+                  <value>com.niit.ecomweb1.model.Bill</value>
+                  <value>com.niit.ecomweb1.model.BillDetails</value>
+                  <value>com.niit.ecomweb1.model.Cart</value>
+                  <value>com.niit.ecomweb1.model.CartItem</value>
+                  <value>com.niit.ecomweb1.model.ProductBrand</value>
+                  <value>com.niit.ecomweb1.model.User</value>
+                  <value>com.niit.ecomweb1.model.Product</value>
+                  <value>com.niit.ecomweb1.model.ProductReview</value>
+                  <value>com.niit.ecomweb1.model.ProductCategory</value>
+                  <value>com.niit.ecomweb1.model.ProductSubCategory</value>
+                  <value>com.niit.ecomweb1.model.Supplier</value>
+                  <value>com.niit.ecomweb1.model.Order</value>
+                   
+            </list>
+      </property>
+</bean>
+
+  <tx:annotation-driven/>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+
+
+
+    
+    
+     
+     
+     
+
+
+</beans>
