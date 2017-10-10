@@ -103,13 +103,30 @@ public class ProductDaoImpl implements ProductDao {
 
 	public List<Product> getProdctsByProductBrand(ProductBrand productBrand) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session=getSession();
+		try{
+			Query query=session.createQuery("from Product where productBrand.productBrandId = :productBrandId");
+			query.setParameter("productBrandId", productBrand.getProductBrandId());
+			return query.list();
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public List<Product> getProductsByProductSubCategory(ProductSubCategory productSubCategory) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session=getSession();
+		try{
+			Query query=session.createQuery("from Product where productSubCategory.productSubCategoryId = :productSubCategoryId");
+			query.setParameter("productSubCategoryId", productSubCategory.getProductSubCategoryId());
+			return query.list();
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
+	
 
 	public Product getProductByCartitem(CartItem cartItem) {
 		// TODO Auto-generated method stub

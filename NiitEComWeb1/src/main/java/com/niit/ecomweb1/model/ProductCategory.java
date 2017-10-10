@@ -1,8 +1,10 @@
 package com.niit.ecomweb1.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -10,8 +12,9 @@ import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class ProductCategory {
+public class ProductCategory implements Serializable{
 	@Id 
+	@GeneratedValue
 	private int productCategoryId;
 	private String productCategoryName;
 	private String productCategoryDetails;

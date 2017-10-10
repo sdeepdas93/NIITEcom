@@ -45,8 +45,8 @@ public class Product implements Serializable {
 		this.supplier = supplier;
 	}
 	@Transient
-	private MultipartFile userImageFile;
-	private String userImage;
+	private MultipartFile productImageFile;
+	private String productImage;
 	
 	public int getProductId() {
 		return productId;
@@ -96,17 +96,17 @@ public class Product implements Serializable {
 	public void setProductReviews(List<ProductReview> productReviews) {
 		this.productReviews = productReviews;
 	}
-	public MultipartFile getUserImageFile() {
-		return userImageFile;
+	public MultipartFile getProductImageFile() {
+		return productImageFile;
 	}
-	public void setUserImageFile(MultipartFile userImageFile) {
-		this.userImageFile = userImageFile;
+	public void setProductImageFile(MultipartFile productImageFile) {
+		this.productImageFile = productImageFile;
 	}
-	public String getUserImage() {
-		return userImage;
+	public String getProductImage() {
+		return productImage;
 	}
-	public void setUserImage(String userImage) {
-		this.userImage = userImage;
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 	
 	

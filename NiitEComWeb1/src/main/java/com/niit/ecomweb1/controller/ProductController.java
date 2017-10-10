@@ -55,7 +55,8 @@ public class ProductController {
 		//mv.addObject("productCategory", productCategory);
 		httpSession.setAttribute("productCategory", productCategory);
 		mv.addObject("productBrands",productBrandDao.getAllProductBrands());
-		mv.addObject("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));
+		httpSession.setAttribute("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));
+		//mv.addObject("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));
 		
 		
 		
@@ -72,6 +73,14 @@ public class ProductController {
 		ProductSubCategory productSubCategory=productSubCategoryDao.getProductSubcategoryByProductSubCategoryId(productSubCategoryId);
 		httpSession.setAttribute("productSubCategory", productSubCategory);
 		mv.addObject("products", productDao.getProductsByProductSubCategory(productSubCategory));
+		return mv;
+		
+	}
+	
+	//will be modified
+	@RequestMapping(value="productDetailsView")
+	public ModelAndView productDetailsView(){
+		ModelAndView mv=new ModelAndView("productDetailsView");
 		return mv;
 	}
 	
