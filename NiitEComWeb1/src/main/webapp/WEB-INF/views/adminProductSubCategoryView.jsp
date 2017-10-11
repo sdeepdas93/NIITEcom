@@ -69,19 +69,19 @@
     </thead>
     <tbody>
     <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
-    <c:forEach items="${productCategories}" var="productCategory">
+    <c:forEach items="${productSubCategories}" var="productSubCategory">
       <tr>
-        <td>${productCategory.productCategoryId}</td> 
-        <td><a href="${context}/adminProductSubCateGoryView/${productCategory.productCategoryId}" >${productCategory.productCategoryName}</a></td>
+        <td>${productSubCategory.productSubCategoryId}</td> 
+        <td>${productSubCategory.productSubCategoryName}</td>
         <td>
-        <c:if test="${productCategory.productCategoryStatus}">
-        <a href="${context}/deactivateProductCategory/${productCategory.productCategoryId}" class="btn btn-danger"> Deactivate</a>
+        <c:if test="${productSubCategory.productSubCategoryStatus}">
+        <a href="${context}/deactivateProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-danger"> Deactivate</a>
         </c:if>
-        <c:if test="${! productCategory.productCategoryStatus}">
-        <a href="${context}/activateProductCategory/${productCategory.productCategoryId}" class="btn btn-success"> Activate</a>
+        <c:if test="${! productSubCategory.productSubCategoryStatus}">
+        <a href="${context}/activateProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-success"> Activate</a>
         </c:if>
-        <a href="${context}/deleteProductCategory/${productCategory.productCategoryId}" class="btn btn-danger"> Delete</a> 
-        <a href="${context}/editProductCategory/${productCategory.productCategoryId}" class="btn btn-success"> Edit</a> <a href="${context}/viewProductCategory/${productCategory.productCategoryId}" class="btn btn-info"> View</a> </td>
+        <a href="${context}/deleteProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-danger"> Delete</a> 
+        <a href="${context}/editProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-success"> Edit</a> <a href="${context}/viewProductCategory/${productSubCategory.productSubCategoryId}" class="btn btn-info"> View</a> </td>
       </tr>
      </c:forEach>
     </tbody>
@@ -90,14 +90,15 @@
 		<h4> Add New ProductCategory</h4>
 		
 		
-  <form:form method="post" action="addProductCategory">
+  <form:form method="post" action="${context}/addProductSubCategory">
     <div class="form-group">
       <label for="Name">Name</label>
-      <form:input class="form-control" path="productCategoryName" type="text"/>
+      <form:input class="form-control" path="productSubCategoryName" type="text"/>
       <label for="Details">Details</label>
-  		<form:textarea class="form-control" rows="5" path="productCategoryDetails"/>
+  		<form:textarea class="form-control" rows="5" path="productSubCategoryDetails"/>
         </br>
-         <button type="submit" class="btn btn-success">Submit</button>
+        
+         <input type="submit" class="btn btn-success">
     </div>
     </form:form>
 		

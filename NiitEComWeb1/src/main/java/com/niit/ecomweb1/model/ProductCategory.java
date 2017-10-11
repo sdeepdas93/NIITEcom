@@ -16,6 +16,8 @@ public class ProductCategory implements Serializable{
 	@Id 
 	@GeneratedValue
 	private int productCategoryId;
+	private boolean productCategoryStatus;
+	
 	private String productCategoryName;
 	private String productCategoryDetails;
 	@OneToMany(mappedBy="productCategory")
@@ -60,7 +62,12 @@ public class ProductCategory implements Serializable{
 		this.productCategoryImage = productCategoryImage;
 	}
 	
-	
+	public boolean isProductCategoryStatus() {
+		return productCategoryStatus;
+	}
+	public void setProductCategoryStatus(boolean productCategoryStatus) {
+		this.productCategoryStatus = productCategoryStatus;
+	}
 	
 
 }

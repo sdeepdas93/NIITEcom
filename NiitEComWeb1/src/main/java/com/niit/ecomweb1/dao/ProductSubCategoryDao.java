@@ -11,6 +11,6 @@ public interface ProductSubCategoryDao {
 	public boolean updateProductSubCategory(ProductSubCategory productSubCategory);
 	public List<ProductSubCategory> getAllProductSubCategorys();
 	public List<ProductSubCategory> getProductSubCategoriesByProductCategory(ProductCategory productCategory);
-	public ProductSubCategory getProductSubcategoryByProductSubCategoryId(int productSubCategoryId);
+	public ProductSubCategory getProductSubCategoryByProductSubCategoryId(int productSubCategoryId);
 
 }

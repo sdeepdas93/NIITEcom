@@ -92,6 +92,10 @@ public class ProductSubCategoryDaoImpl implements ProductSubCategoryDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+		}finally {
+			session.flush();
+			session.close();
+			
 		}
 	}
 
@@ -105,10 +109,14 @@ public class ProductSubCategoryDaoImpl implements ProductSubCategoryDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+		}finally {
+			session.flush();
+			session.close();
+			
 		}
 	}
 
-	public ProductSubCategory getProductSubcategoryByProductSubCategoryId(int productSubCategoryId) {
+	public ProductSubCategory getProductSubCategoryByProductSubCategoryId(int productSubCategoryId) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
@@ -118,6 +126,10 @@ public class ProductSubCategoryDaoImpl implements ProductSubCategoryDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+			}finally {
+				session.flush();
+				session.close();
+				
 			}
 		
 	}

@@ -70,7 +70,7 @@ public class ProductController {
 	public ModelAndView viewProductsByProductSubCategory(@PathVariable int productSubCategoryId, HttpSession httpSession){
 		ModelAndView mv=new ModelAndView("viewProductsByProductSubCategory");
 		
-		ProductSubCategory productSubCategory=productSubCategoryDao.getProductSubcategoryByProductSubCategoryId(productSubCategoryId);
+		ProductSubCategory productSubCategory=productSubCategoryDao.getProductSubCategoryByProductSubCategoryId(productSubCategoryId);
 		httpSession.setAttribute("productSubCategory", productSubCategory);
 		mv.addObject("products", productDao.getProductsByProductSubCategory(productSubCategory));
 		return mv;

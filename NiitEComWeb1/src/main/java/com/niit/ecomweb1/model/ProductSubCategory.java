@@ -1,8 +1,10 @@
 package com.niit.ecomweb1.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,16 +14,19 @@ import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class ProductSubCategory {
+public class ProductSubCategory implements Serializable{
 	@Id
+	@GeneratedValue
 	private int productSubCategoryId;
+	private boolean productSubCategoryStatus;
+	
 	private String productSubCategoryName;
 	@OneToMany(mappedBy="productSubCategory")
 	private List<Product> products;
 	@ManyToOne
 	@JoinColumn(name="productCategoryId")
 	private ProductCategory productCategory;
-	private String productSubCategoryDescription;
+	private String productSubCategoryDetails;
 	@Transient
 	private MultipartFile productSubCategoryImageFile;
 	private String productSubcategoryImage;
@@ -49,11 +54,12 @@ public class ProductSubCategory {
 	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
 	}
-	public String getProductSubCategoryDescription() {
-		return productSubCategoryDescription;
+	
+	public String getProductSubCategoryDetails() {
+		return productSubCategoryDetails;
 	}
-	public void setProductSubCategoryDescription(String productSubCategoryDescription) {
-		this.productSubCategoryDescription = productSubCategoryDescription;
+	public void setProductSubCategoryDetails(String productSubCategoryDetails) {
+		this.productSubCategoryDetails = productSubCategoryDetails;
 	}
 	public MultipartFile getProductSubCategoryImageFile() {
 		return productSubCategoryImageFile;
@@ -67,7 +73,12 @@ public class ProductSubCategory {
 	public void setProductSubcategoryImage(String productSubcategoryImage) {
 		this.productSubcategoryImage = productSubcategoryImage;
 	}
-	
+	public boolean isProductSubCategoryStatus() {
+		return productSubCategoryStatus;
+	}
+	public void setProductSubCategoryStatus(boolean productSubCategoryStatus) {
+		this.productSubCategoryStatus = productSubCategoryStatus;
+	}
 	
 
 }

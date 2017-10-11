@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Product implements Serializable {
 	@Id
 	private int productId;
+	private boolean productStatus;
 	private String productName;
 	private double productPrice;
 	private String productInfo;
@@ -107,6 +108,12 @@ public class Product implements Serializable {
 	}
 	public void setProductImage(String productImage) {
 		this.productImage = productImage;
+	}
+	public boolean isProductStatus() {
+		return productStatus;
+	}
+	public void setProductStatus(boolean productStatus) {
+		this.productStatus = productStatus;
 	}
 	
 	

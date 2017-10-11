@@ -47,7 +47,7 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
 		
 	}
 
-	public boolean deleteoder(ProductCategory productCategory) {
+	public boolean deleteProductCategory(ProductCategory productCategory) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
@@ -63,7 +63,7 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
 		}
 	}
 
-	public boolean updateoder(ProductCategory productCategory) {
+	public boolean updateProductCategory(ProductCategory productCategory) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
@@ -103,6 +103,9 @@ public class ProductCategoryDaoImpl implements ProductCategoryDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+			}finally {
+				session.flush();
+				session.close();
 			}
 	}
 }
