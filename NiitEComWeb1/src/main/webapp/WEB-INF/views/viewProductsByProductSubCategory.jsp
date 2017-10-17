@@ -114,13 +114,13 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-                                    	<a href="viewProductDetails">
+                                    	<a href="${context}/viewProductDetails/${product.productId}">
 										<img src="${context}/${product.productImage}" alt="${product.productImage}" />
 										<h2>&#x20B9;${product.productPrice}</h2>
 										<p>${product.productName}</p></a>
                                         
 										<a href="${context}/addToCart/${product.productId}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-eye"></i>View Product</a>
+                                        <a href="${context}/viewProductDetails/${product.productId}" class="btn btn-default add-to-cart"><i class="fa fa-eye"></i>View Product</a>
 									</div>
 									<img src="${context}/resources/images/home/new.png" class="new" alt="" />
 								</div>

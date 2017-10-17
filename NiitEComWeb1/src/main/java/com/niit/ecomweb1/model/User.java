@@ -16,16 +16,17 @@ public class User {
 	@Id
 	private String userId;
 	private String password;
+	private boolean enabled;
 	private String userRole;
 	private String userName;
 	private String userEmailId;
 	private String sex;
 	private String userContactNo1;
 	private String userContactNo2;
-	@Transient
+	/*@Transient
 	private MultipartFile userImageFile;
 	
-	private String userImage;
+	private String userImage;*/
 	@OneToMany(mappedBy="user")
 	private List<ProductReview>  productReviews;
 	@OneToMany(mappedBy="user")
@@ -34,9 +35,9 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<Bill> bills;
 	
-	@OneToOne
+	/*@OneToOne
 	@JoinColumn(name="addressId")
-	Address address;
+	Address address;*/
 	
 	
 	public List<Bill> getBills() {
@@ -45,12 +46,12 @@ public class User {
 	public void setBills(List<Bill> bills) {
 		this.bills = bills;
 	}
-	public Address getAddress() {
+	/*public Address getAddress() {
 		return address;
 	}
 	public void setAddress(Address address) {
 		this.address = address;
-	}
+	}*/
 	public String getPassword() {
 		return password;
 	}
@@ -99,7 +100,7 @@ public class User {
 	public void setUserContactNo2(String userContactNo2) {
 		this.userContactNo2 = userContactNo2;
 	}
-	public MultipartFile getUserImageFile() {
+	/*public MultipartFile getUserImageFile() {
 		return userImageFile;
 	}
 	public void setUserImageFile(MultipartFile userImageFile) {
@@ -110,7 +111,7 @@ public class User {
 	}
 	public void setUserImage(String userImage) {
 		this.userImage = userImage;
-	}
+	}*/
 	public List<ProductReview> getProductReviews() {
 		return productReviews;
 	}

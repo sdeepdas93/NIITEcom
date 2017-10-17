@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.niit.ecomweb1.dao.*;
+import com.niit.ecomweb1.model.Product;
 import com.niit.ecomweb1.model.ProductBrand;
 import com.niit.ecomweb1.model.ProductCategory;
 import com.niit.ecomweb1.model.ProductSubCategory;
@@ -78,10 +79,74 @@ public class ProductController {
 	}
 	
 	//will be modified
-	@RequestMapping(value="productDetailsView")
-	public ModelAndView productDetailsView(){
+	@RequestMapping(value="viewProductDetails/{productId}",method=RequestMethod.GET)
+	public ModelAndView productDetailsView(@PathVariable int productId,HttpSession httpSession){
 		ModelAndView mv=new ModelAndView("productDetailsView");
+		Product product=productDao.getProductByProductId(productId);
+		httpSession.setAttribute("product",product);
 		return mv;
 	}
 	
+	
+	
+	//for users and admin
+	
+	@RequestMapping("/userProductCategoryView")
+	public ModelAndView userPrductCategoryView(HttpSession httpSession){
+		ModelAndView mv=new ModelAndView("productCategoryView");
+		//List<ProductCategory> productCategories=productCategoryDao.getAllProductCategorys();
+		//System.out.println("im here");
+		/*for(ProductCategory productCategory:productCategories)
+			System.out.println(productCategory.getProductCategoryName());*/
+		//mv.addObject("productCategories", productCategoryDao.getAllProductCategorys());
+		httpSession.setAttribute("productCategories", productCategoryDao.getAllProductCategorys());
+		mv.addObject("productBrands",productBrandDao.getAllProductBrands());
+		
+		for(ProductBrand productBrand: productBrandDao.getAllProductBrands())
+			System.out.println(productBrand.getProductBrandName());
+		return mv;
+		
+		
+	}
+	
+	
+	
+	//productSubCategoryView
+	@RequestMapping(value="userProductSubCategoryView/{productCategoryId}",method=RequestMethod.GET)
+	
+	public ModelAndView userProductSubCategoryView(@PathVariable int productCategoryId, HttpSession httpSession){
+		ModelAndView mv=new ModelAndView("productSubCategoryView");
+		ProductCategory productCategory= productCategoryDao.getProductCategoryByProductCategoryId(productCategoryId);
+		//mv.addObject("productCategory", productCategory);
+		httpSession.setAttribute("productCategory", productCategory);
+		mv.addObject("productBrands",productBrandDao.getAllProductBrands());
+		httpSession.setAttribute("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));
+		//mv.addObject("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));
+		
+		
+		
+		return mv;
+		
+	}
+	
+	//viewProductsByProductSubCategory
+	@RequestMapping(value="userViewProductsByProductSubCategory/{productSubCategoryId}",method=RequestMethod.GET)
+	
+	public ModelAndView userViewProductsByProductSubCategory(@PathVariable int productSubCategoryId, HttpSession httpSession){
+		ModelAndView mv=new ModelAndView("viewProductsByProductSubCategory");
+		
+		ProductSubCategory productSubCategory=productSubCategoryDao.getProductSubCategoryByProductSubCategoryId(productSubCategoryId);
+		httpSession.setAttribute("productSubCategory", productSubCategory);
+		mv.addObject("products", productDao.getProductsByProductSubCategory(productSubCategory));
+		return mv;
+		
+	}
+	
+	//will be modified
+	@RequestMapping(value="userProductDetailsView")
+	public ModelAndView userProductDetailsView(){
+		ModelAndView mv=new ModelAndView("productDetailsView");
+		return mv;
+	}
+
 }

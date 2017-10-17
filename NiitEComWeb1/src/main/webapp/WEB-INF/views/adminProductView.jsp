@@ -75,6 +75,7 @@
       <tr>
         <td>${product.productId}</td> 
         <td>${product.productName}</td>
+        <td>${product.productInfo}</td>
         <td>
         <c:if test="${product.productStatus}">
         <a href="${context}/deactivateProduct/${product.productId}" class="btn btn-danger"> Deactivate</a>

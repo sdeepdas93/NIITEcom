@@ -37,7 +37,7 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="${context}/productCategoryView"><span class="glyphicon glyphicon-home"></span> Back To Front End</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      <li><a href="${context}/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
 </nav>
