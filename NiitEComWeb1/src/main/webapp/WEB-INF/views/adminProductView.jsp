@@ -57,31 +57,34 @@
 </div>
 </c:if>
 <div class="container">
-  <h4>Product Subcategory</h4>
-  <p>List of ProductSubCategories:</p>            
+  <h4>${productSubCategory.productSubCategoryName}</h4>
+  <p>List of Products:</p>            
   <table class="table table-hover">
     <thead>
       <tr>
-        <th class="col-sm-2">Id</th>
-        <th class="col-sm-4">Name</th>
-        <th class="col-sm-6"> </th>
+        <th class="col-sm-1">Id</th>
+        <th class="col-sm-2">Name</th>
+        <th class="col-sm-1">Price</th>
+        <th class="col-sm-4">Info</th>
+        <th class="col-sm-4"> </th>
       </tr>
     </thead>
     <tbody>
     <c:set var="context" value="${pageContext.request.contextPath}"></c:set>
-    <c:forEach items="${productSubCategories}" var="productSubCategory">
+    <c:forEach items="${products}" var="product">
       <tr>
-        <td>${productSubCategory.productSubCategoryId}</td> 
-        <td><a href="${context}/adminProductView/${productSubCategory.productSubCategoryId}">${productSubCategory.productSubCategoryName} </a> </td>
+        <td>${product.productId}</td> 
+        <td>${product.productName}</td>
         <td>
-        <c:if test="${productSubCategory.productSubCategoryStatus}">
-        <a href="${context}/deactivateProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-danger"> Deactivate</a>
+        <c:if test="${product.productStatus}">
+        <a href="${context}/deactivateProduct/${product.productId}" class="btn btn-danger"> Deactivate</a>
         </c:if>
-        <c:if test="${! productSubCategory.productSubCategoryStatus}">
-        <a href="${context}/activateProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-success"> Activate</a>
+        <c:if test="${! product.productStatus}">
+        <a href="${context}/activateProduct/${product.productId}" class="btn btn-success"> Activate</a>
         </c:if>
-        <a href="${context}/deleteProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-danger"> Delete</a> 
-        <a href="${context}/editProductSubCategory/${productSubCategory.productSubCategoryId}" class="btn btn-success"> Edit</a> <a href="${context}/viewProductCategory/${productSubCategory.productSubCategoryId}" class="btn btn-info"> View</a> </td>
+        <a href="${context}/deleteProduct/${product.productId}" class="btn btn-danger"> Delete</a> 
+        <a href="${context}/editProduct/${product.productId}" class="btn btn-success"> Edit</a> 
+        <a href="${context}/viewProduct/${product.productId}" class="btn btn-info"> View</a> </td>
       </tr>
      </c:forEach>
     </tbody>
@@ -90,13 +93,26 @@
 		<h4> Add New ProductCategory</h4>
 		
 		
-  <form:form method="post" action="${context}/addProductSubCategory">
+  <form:form method="post" action="${context}/addProduct" enctype="multipart/form-data">
     <div class="form-group">
       <label for="Name">Name</label>
-      <form:input class="form-control" path="productSubCategoryName" type="text"/>
-      <label for="Details">Details</label>
-  		<form:textarea class="form-control" rows="5" path="productSubCategoryDetails"/>
-        </br>
+      <form:input class="form-control" path="productName" type="text"/>
+      <label for="Name">Price</label>
+      <form:input class="form-control" path="productPrice" type="text"/>
+      <label for="Details">Info</label>
+  		<form:textarea class="form-control" rows="5" path="productInfo"/>
+        <br>
+        <form:select class="form-control" path="productBrand.productBrandId">
+        <c:forEach items="${productBrands}" var="productBrand">
+        <form:option value="${productBrand.productBrandId}">
+        ${productBrand.productBrandName}
+        </form:option>
+        </c:forEach>
+        </form:select>
+        <br>
+       <form:hidden path="productImage"  /> <input type="file" class="form-control" name="productImageFile"/>
+		
+		
         
          <input type="submit" class="btn btn-success">
     </div>

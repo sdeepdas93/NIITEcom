@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Entity
 public class Product implements Serializable {
 	@Id
+	@GeneratedValue
 	private int productId;
 	private boolean productStatus;
 	private String productName;

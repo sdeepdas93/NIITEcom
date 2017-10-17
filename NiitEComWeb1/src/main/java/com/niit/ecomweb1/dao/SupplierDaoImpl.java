@@ -10,14 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.niit.ecomweb1.model.ProductBrand;
+import com.niit.ecomweb1.model.Order;
+import com.niit.ecomweb1.model.Supplier;
 
-@Repository("productBrandDao")
+@Repository("supplierDao")
 @Transactional
-public class ProductBrandDaoImpl implements ProductBrandDao {
+public class SupplierDaoImpl implements SupplierDao {
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+		
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
@@ -30,11 +32,31 @@ public class ProductBrandDaoImpl implements ProductBrandDao {
 		return sessionFactory.openSession();
 	}
 
-	public List<ProductBrand> getAllProductBrands() {
+
+	public boolean insertSupplier(Supplier supplier) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean deleteSupplier(Supplier supplier) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean updateSupplier(Supplier supplier) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	
+
+
+	public List<Supplier> getAllSuppliers() {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			Query query=session.createQuery("from ProductBrand");
+			Query query=session.createQuery("from Supplier");
 			return query.list();
 			
 		}catch(HibernateException e){
@@ -44,8 +66,6 @@ public class ProductBrandDaoImpl implements ProductBrandDao {
 				session.flush();
 				session.close();
 			}
-		
 	}
-	
 
 }

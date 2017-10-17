@@ -98,6 +98,10 @@ public class ProductDaoImpl implements ProductDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+		}finally {
+			session.flush();
+			session.close();
+			
 		}
 	}
 
@@ -111,6 +115,10 @@ public class ProductDaoImpl implements ProductDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+		}finally {
+			session.flush();
+			session.close();
+			
 		}
 	}
 
@@ -124,6 +132,10 @@ public class ProductDaoImpl implements ProductDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+		}finally {
+			session.flush();
+			session.close();
+			
 		}
 	}
 	
@@ -143,6 +155,10 @@ public class ProductDaoImpl implements ProductDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
+			}finally {
+				session.flush();
+				session.close();
+				
 			}
 		
 	}

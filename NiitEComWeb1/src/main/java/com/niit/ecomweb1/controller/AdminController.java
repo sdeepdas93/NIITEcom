@@ -1,7 +1,11 @@
 package com.niit.ecomweb1.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +14,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.niit.ecomweb1.dao.ProductBrandDao;
 import com.niit.ecomweb1.dao.ProductCategoryDao;
+import com.niit.ecomweb1.dao.ProductDao;
 import com.niit.ecomweb1.dao.ProductSubCategoryDao;
+import com.niit.ecomweb1.dao.SupplierDao;
+import com.niit.ecomweb1.model.Product;
 import com.niit.ecomweb1.model.ProductBrand;
 import com.niit.ecomweb1.model.ProductCategory;
 import com.niit.ecomweb1.model.ProductSubCategory;
+import com.niit.ecomweb1.model.Supplier;
 
 @Controller
 public class AdminController {
@@ -25,6 +36,12 @@ public class AdminController {
 	ProductCategoryDao productCategoryDao;
 	@Autowired 
 	ProductSubCategoryDao productSubCategoryDao;
+	@Autowired
+	ProductDao productDao;
+	@Autowired
+	ProductBrandDao productBrandDao;
+	@Autowired 
+	SupplierDao supplierDao;
 	
 	
 	
@@ -181,5 +198,108 @@ public class AdminController {
 			httpSession.setAttribute("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));	
 			return modelAndView;
 		}
+		
+		
+		@RequestMapping(value="/deleteProductSubCategory/{productSubCategoryId}",method=RequestMethod.GET)
+		public ModelAndView deleteProductSubCategory(@PathVariable int productSubCategoryId,HttpSession httpSession){
+			ModelAndView modelAndView=new ModelAndView("adminProductSubCategoryView","command",new ProductSubCategory());
+			ProductSubCategory productSubCategory=productSubCategoryDao.getProductSubCategoryByProductSubCategoryId(productSubCategoryId);
+			if(productSubCategoryDao.deleteProductSubCategory(productSubCategory)){
+				
+				modelAndView.addObject("successMessage", "ProductSubCategory deleted successfully");
+			}else{
+				modelAndView.addObject("errorMessage", "Failed to delete ProductSubCategory");
+				
+			}
+			ProductCategory  productCategory=(ProductCategory)httpSession.getAttribute("productCategory");
+			httpSession.setAttribute("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));	
+			return modelAndView;
+		}
+		
+		
+		
+		//**Products**//
+		@RequestMapping(value="/adminProductView/{productSubCategoryId}",method=RequestMethod.GET)
+		public ModelAndView adminProductView(@PathVariable int productSubCategoryId,HttpSession httpSession){
+			System.out.println("at method");
+			ProductSubCategory productSubCategory=productSubCategoryDao.getProductSubCategoryByProductSubCategoryId(productSubCategoryId);
+			
+			httpSession.setAttribute("productSubCategory",productSubCategory);
+			
+			
+			
+			ModelAndView modelAndView=new ModelAndView("adminProductView","command",new Product());
+			List<Product> products =productDao.getProductsByProductSubCategory(productSubCategory);
+			if(products!=null){
+				httpSession.setAttribute("products", products);
+			}else{
+				modelAndView.addObject("errorMessage", "Failed to show products");
+			}
+			
+			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();
+			httpSession.setAttribute("productBrands",productBrands);
+			List<Supplier> suppliers=supplierDao.getAllSuppliers();
+			httpSession.setAttribute("suppliers", suppliers);
+			return modelAndView;
+		}
+		
+		
+		
+		
+		@RequestMapping(value="/addProduct",method=RequestMethod.POST)
+		public ModelAndView AddUser(@ModelAttribute("Product") Product product,HttpServletRequest request, 
+				@RequestParam("productImageFile") MultipartFile productImageFile,HttpSession httpSession){ 
+			System.out.println("at addProduct");
+			ModelAndView modelAndView=new ModelAndView("adminProductView","command",new Product());
+			ProductSubCategory productSubCategory=(ProductSubCategory)httpSession.getAttribute("productSubCategory");
+			product.setProductSubCategory(productSubCategory);
+			
+			if(productDao.getProductByProductId(product.getProductId())==null){
+				//code for uploadding the file
+				
+				byte fileBytes[];
+				FileOutputStream fos = null;
+				
+				String fileName = "";
+				String productImage = "";
+				ServletContext context = request.getServletContext();
+				String realContextPath = context.getRealPath("/");
+				String productName = product.getProductName();
+				if (productImageFile != null){
+					fileName = realContextPath + "/resources/images/productimages/" + productName + ".jpg";
+					productImage = "resources/images/productimages/" + productName + ".jpg";
+					System.out.println("===" + fileName + "===");
+					File fileobj = new File(fileName);
+					try{
+						fos = new FileOutputStream(fileobj);
+						fileBytes = productImageFile.getBytes();
+						fos.write(fileBytes);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				
+					product.setProductImage(productImage);	
+				}
+				//ends
+		    	productDao.insertProduct(product);
+		    	
+		    	modelAndView.addObject("successMessage","product inserted successfully");
+	        
+			}else {
+				
+				modelAndView.addObject("errorMessage","failed to insert product");
+				
+			}
+			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();
+			httpSession.setAttribute("productBrands",productBrands);
+			List<Product> products =productDao.getProductsByProductSubCategory(productSubCategory);
+			httpSession.setAttribute("products", products);
+			List<Supplier> suppliers=supplierDao.getAllSuppliers();
+			httpSession.setAttribute("suppliers", suppliers);
+			return modelAndView;
+			
+			
+		}
+		
 		
 }
