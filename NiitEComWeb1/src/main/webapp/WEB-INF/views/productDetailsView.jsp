@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <jsp:include page="header.jsp"></jsp:include>
 		<div class="header-bottom"><!--header-bottom-->
@@ -18,7 +19,13 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html">Home</a></li>
+								<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+								<li><a href="${pageContext.request.contextPath}/userProductCategoryView">Home</a></li>
+								</security:authorize>
+								
+								<security:authorize access="isAnonymous()">
+								<li><a href="${pageContext.request.contextPath}/productCategoryView">Home</a></li>
+								</security:authorize>
 								<li class="dropdown"><a href="#" class="active">Categories<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                     <c:set var="context" value="${pageContext.request.contextPath}" />

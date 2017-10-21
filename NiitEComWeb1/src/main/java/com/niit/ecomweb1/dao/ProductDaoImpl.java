@@ -77,14 +77,12 @@ public class ProductDaoImpl implements ProductDao {
 		try{
 		
 		session.update(product);
+		session.flush();
+		session.close();
 		return true;
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return false;
-		}finally {
-			session.flush();
-			session.close();
-			
 		}
 		
 	}

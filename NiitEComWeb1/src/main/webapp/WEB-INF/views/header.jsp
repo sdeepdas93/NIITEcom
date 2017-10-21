@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
@@ -37,8 +38,8 @@
 					<div class="col-sm-6 ">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-								<li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+								<li><a href=""><i class="fa fa-phone"></i> +91 7797336889</a></li>
+								<li><a href=""><i class="fa fa-envelope"></i> sdeepdas93@gmail.com</a></li>
 							</ul>
 						</div>
 					</div>
@@ -62,9 +63,15 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.html"><img src="${context}/resources/images/home/logo.png" alt="" /></a>
+							<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+							<a href="${pageContext.request.contextPath}/userProductCategoryView"><img src="${context}/resources/images/home/logo.png" alt="" /></a>
+							</security:authorize>
+							<security:authorize access="isAnonymous()">
+							<a href="${pageContext.request.contextPath}/productCategoryView"><img src="${context}/resources/images/home/logo.png" alt="" /></a>
+							</security:authorize>
+							
 						</div>
-						<div class="btn-group pull-right">
+						<!-- <div class="btn-group pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
 									USA
@@ -86,18 +93,31 @@
 									<li><a href="">Pound</a></li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
+								<c:if test="${pageContext.request.userPrincipal.name!=null}">
+								<li><a href=""><i class="fa fa-user" aria-hidden="true"></i>Hello ${user.userName}</li>
+								</c:if>
+								<security:authorize access="hasRole('ROLE_ADMIN')">
 								<li><a href="${context}/adminProductCategoryView"><i class="fa fa-cogs"></i> Admin Control</a></li>
-								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
-								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
+								</security:authorize>
+								<!-- <li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li> -->
+								<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="${context}/loginPage"><i class="fa fa-lock"></i> Login</a></li>
+								</security:authorize>
+								<li><a href="${context}/cartView"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								
+								<security:authorize access="isAnonymous()">
+								<li><a href="${context}/userRegistrationView"><i class="fa fa-user" aria-hidden="true"></i> SignUp</a></li>
+								<li><a href="${context}/loginPage"><i class="fa fa-sign-in"></i> Login</a></li>
+								</security:authorize>
+								<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
 								<li><a href="${context}/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+								</security:authorize>
 							</ul>
 						</div>
 					</div>

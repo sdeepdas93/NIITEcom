@@ -12,5 +12,6 @@ public interface UserDao {
 	public List<User> getAllUsers();
 	public User getUserByProductReview(ProductReview productReview);
 	public User getUserByCart(User user);
+	public User getUserByUserId(String userId);
 
 }

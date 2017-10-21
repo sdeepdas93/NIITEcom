@@ -10,14 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.niit.ecomweb1.model.Cart;
-import com.niit.ecomweb1.model.CartItem;
-@Repository("cartItemDao")
+import com.niit.ecomweb1.model.Order;
+import com.niit.ecomweb1.model.ProductReview;
+import com.niit.ecomweb1.model.User;
+@Repository("userDao")
 @Transactional
-public class CartItemDaoImpl implements CartItemDao {
+public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+		
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
@@ -30,102 +31,84 @@ public class CartItemDaoImpl implements CartItemDao {
 		return sessionFactory.openSession();
 	}
 
-	public boolean insertCartItem(CartItem cartItem) {
+	public boolean insertUser(User user) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			session.save(cartItem);
+			session.save(user);
 			return true;
-		}catch(HibernateException e){
+			}catch(HibernateException e){
 			e.printStackTrace();
 			return false;
-		}finally {
+			}
+		finally {
 			session.flush();
 			session.close();
 		}
 		
 	}
 
-	public boolean deletecartItem(CartItem cartItem) {
+	public boolean deleteUser(User user) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			session.delete(cartItem);
+			session.delete(user);
 			return true;
-		}catch(HibernateException e){
+			}catch(HibernateException e){
 			e.printStackTrace();
 			return false;
-		}finally {
+			}
+		finally {
 			session.flush();
 			session.close();
 		}
-		
 	}
 
-	public boolean updatecartItem(CartItem cartItem) {
+	public boolean updateUser(User user) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			session.update(cartItem);
-			
+			session.update(user);
 			return true;
-		}catch(HibernateException e){
+			}catch(HibernateException e){
 			e.printStackTrace();
 			return false;
-		}finally {
+			}
+		finally {
 			session.flush();
 			session.close();
-			
 		}
+	}
+
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public User getUserByProductReview(ProductReview productReview) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public User getUserByCart(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public User getUserByUserId(String userId){
 		
-	}
-
-	public List<CartItem> getAllCartItems() {
-		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			Query query=session.createQuery("From CartItem");
-			return query.list();
-		}
-		catch(HibernateException e){
+			Query query=session.createQuery("from User where userId =?");
+			query.setString(0, userId);
+			return (User) query.uniqueResult();
+		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
-		}
+			}finally {
+				session.flush();
+				session.close();
+			}
 	}
-
-	public List<CartItem> getCartItemsByCart(Cart cart) {
-		// TODO Auto-generated method stub
-		Session session=getSession();
-		try{
-			Query query=session.createQuery("From CartItem where cart.cartId = ?");
-			query.setInteger(0, cart.getCartId());
-			
-			return query.list();
-			
-			
-		}
-		catch(HibernateException e){
-			e.printStackTrace();
-			return null;
-		}finally {
-			session.flush();
-			session.close();
-			
-		}
-	}
-
-	public CartItem getCartItembyCartItemId(int cartItemId) {
-		// TODO Auto-generated method stub
-		Session session=getSession();
-		try{
-			Query query=session.createQuery("From CartItem where cartItemId =?");
-			query.setParameter(0, cartItemId);
-			return (CartItem) query.uniqueResult();
-		}
-		catch(HibernateException e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-
+	
 }

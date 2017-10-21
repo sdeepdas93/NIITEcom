@@ -1,5 +1,6 @@
 package com.niit.ecomweb1.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,8 @@ public class ProductController {
 	ProductSubCategoryDao productSubCategoryDao;
 	@Autowired
 	ProductDao productDao;
+	@Autowired
+	UserDao userDao;
 
 	@RequestMapping("/productCategoryView")
 	public ModelAndView prductCategoryView(HttpSession httpSession){
@@ -92,7 +95,7 @@ public class ProductController {
 	//for users and admin
 	
 	@RequestMapping("/userProductCategoryView")
-	public ModelAndView userPrductCategoryView(HttpSession httpSession){
+	public ModelAndView userPrductCategoryView(HttpSession httpSession,Principal principal){
 		ModelAndView mv=new ModelAndView("productCategoryView");
 		//List<ProductCategory> productCategories=productCategoryDao.getAllProductCategorys();
 		//System.out.println("im here");
@@ -101,9 +104,8 @@ public class ProductController {
 		//mv.addObject("productCategories", productCategoryDao.getAllProductCategorys());
 		httpSession.setAttribute("productCategories", productCategoryDao.getAllProductCategorys());
 		mv.addObject("productBrands",productBrandDao.getAllProductBrands());
-		
-		for(ProductBrand productBrand: productBrandDao.getAllProductBrands())
-			System.out.println(productBrand.getProductBrandName());
+		String userId=principal.getName();
+		httpSession.setAttribute("user", userDao.getUserByUserId(userId));
 		return mv;
 		
 		
@@ -148,5 +150,8 @@ public class ProductController {
 		ModelAndView mv=new ModelAndView("productDetailsView");
 		return mv;
 	}
-
+	
+	
+	
+	
 }

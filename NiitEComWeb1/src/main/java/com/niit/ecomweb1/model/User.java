@@ -23,6 +23,7 @@ public class User {
 	private String sex;
 	private String userContactNo1;
 	private String userContactNo2;
+	private String userAddress;
 	/*@Transient
 	private MultipartFile userImageFile;
 	
@@ -35,6 +36,10 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<Bill> bills;
 	
+	@OneToOne
+	@JoinColumn(name="cartId")
+	Cart cart;
+	
 	/*@OneToOne
 	@JoinColumn(name="addressId")
 	Address address;*/
@@ -43,15 +48,28 @@ public class User {
 	public List<Bill> getBills() {
 		return bills;
 	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	public String getUserAddress() {
+		return userAddress;
+	}
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+	public Cart getCart() {
+		return cart;
+	}
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
 	public void setBills(List<Bill> bills) {
 		this.bills = bills;
 	}
-	/*public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}*/
+	
 	public String getPassword() {
 		return password;
 	}

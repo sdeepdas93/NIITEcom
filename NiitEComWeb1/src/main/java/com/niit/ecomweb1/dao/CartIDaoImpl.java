@@ -37,16 +37,15 @@ private SessionFactory sessionFactory;
 		try{
 			
 			session.save(cart);
+			session.flush();
+			session.close();
 			return true;
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return false;
 			
 		}
-		finally {
-			session.flush();
-			session.close();
-			}
+		
 		
 		
 	}
@@ -105,15 +104,31 @@ private SessionFactory sessionFactory;
 
 	public Cart getCartByUser(User user) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session=getSession();
+		try{
+			Query query=session.createQuery("from Cart where user.userId = :userId");
+			query.setParameter("userId", user.getUserId());
+			return (Cart) query.uniqueResult();
+			
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return null;
+		}finally{
+			session.flush();
+			session.close();
+			
+		}
 	}
 
 	public Cart getCartByCartId(int cartId) {
 		// TODO Auto-generated method stub
+		Session session=getSession();
 		try{
-			Session session=getSession();
+			
 			Query query=session.createQuery("from Cart where cartId = ?");
 			query.setInteger(0,cartId);
+			session.flush();
+			session.close();
 			return (Cart) query.uniqueResult();
 			
 			}catch(HibernateException e){

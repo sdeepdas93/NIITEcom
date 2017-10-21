@@ -75,6 +75,7 @@ public class AdminController {
 	@RequestMapping(value="/activateProductCategory/{productCategoryId}",method=RequestMethod.GET)
 	public ModelAndView activateProductCategory(@PathVariable int productCategoryId, HttpSession httpSession){
 		ModelAndView modelAndView=new ModelAndView("adminProductCategoryView","command",new ProductCategory());
+		
 		ProductCategory productCategory=productCategoryDao.getProductCategoryByProductCategoryId(productCategoryId);
 		productCategory.setProductCategoryStatus(true);
 		if(productCategoryDao.updateProductCategory(productCategory)){
@@ -288,6 +289,146 @@ public class AdminController {
 			}else {
 				
 				modelAndView.addObject("errorMessage","failed to insert product");
+				
+			}
+			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();
+			httpSession.setAttribute("productBrands",productBrands);
+			List<Product> products =productDao.getProductsByProductSubCategory(productSubCategory);
+			httpSession.setAttribute("products", products);
+			List<Supplier> suppliers=supplierDao.getAllSuppliers();
+			httpSession.setAttribute("suppliers", suppliers);
+			return modelAndView;
+			
+			
+		}
+		
+		
+		//deleteProduct
+		@RequestMapping(value="/deleteProduct/{productId}",method=RequestMethod.GET)
+		public ModelAndView deleteProduct(@PathVariable int productId,HttpSession httpSession){
+			ModelAndView modelAndView=new ModelAndView("adminProductView","command",new Product());
+			ProductSubCategory productSubCategory=(ProductSubCategory) httpSession.getAttribute("productSubCategory");
+			Product product=productDao.getProductByProductId(productId);
+			if(productDao.deleteProduct(product)){
+				
+				modelAndView.addObject("successMessage", "Product deleted successfully");
+			}else{
+				modelAndView.addObject("errorMessage", "Failed to delete Product");
+				
+			}
+			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();
+			httpSession.setAttribute("productBrands",productBrands);
+			List<Product> products =productDao.getProductsByProductSubCategory(productSubCategory);
+			httpSession.setAttribute("products", products);
+			List<Supplier> suppliers=supplierDao.getAllSuppliers();
+			httpSession.setAttribute("suppliers", suppliers);
+			return modelAndView;
+		}
+		
+		//activateProduct
+		@RequestMapping(value="/activateProduct/{productId}",method=RequestMethod.GET)
+		public ModelAndView activateProduct(@PathVariable int productId,HttpSession httpSession){
+			ModelAndView modelAndView=new ModelAndView("adminProductView","command",new Product());
+			ProductSubCategory productSubCategory=(ProductSubCategory) httpSession.getAttribute("productSubCategory");
+			Product product=productDao.getProductByProductId(productId);
+			product.setProductStatus(true);
+			if(productDao.updateProduct(product)){
+				
+				modelAndView.addObject("successMessage", "Product activated successfully");
+			}else{
+				modelAndView.addObject("errorMessage", "Failed to activate Product");
+				
+			}
+			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();
+			httpSession.setAttribute("productBrands",productBrands);
+			List<Product> products =productDao.getProductsByProductSubCategory(productSubCategory);
+			httpSession.setAttribute("products", products);
+			List<Supplier> suppliers=supplierDao.getAllSuppliers();
+			httpSession.setAttribute("suppliers", suppliers);
+			return modelAndView;
+		}
+		
+		
+		@RequestMapping(value="/deactivateProduct/{productId}",method=RequestMethod.GET)
+		public ModelAndView deactivateProduct(@PathVariable int productId,HttpSession httpSession){
+			ModelAndView modelAndView=new ModelAndView("adminProductView","command",new Product());
+			ProductSubCategory productSubCategory=(ProductSubCategory) httpSession.getAttribute("productSubCategory");
+			Product product=productDao.getProductByProductId(productId);
+			product.setProductStatus(false);
+			if(productDao.updateProduct(product)){
+				
+				modelAndView.addObject("successMessage", "Product deactivated successfully");
+			}else{
+				modelAndView.addObject("errorMessage", "Failed to deactivate Product");
+				
+			}
+			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();
+			httpSession.setAttribute("productBrands",productBrands);
+			List<Product> products =productDao.getProductsByProductSubCategory(productSubCategory);
+			httpSession.setAttribute("products", products);
+			List<Supplier> suppliers=supplierDao.getAllSuppliers();
+			httpSession.setAttribute("suppliers", suppliers);
+			return modelAndView;
+		}
+		
+		
+		@RequestMapping(value="/adminProductUpdateView/{productId}",method=RequestMethod.GET)
+		public ModelAndView adminProductUpdateview(@PathVariable int productId,HttpSession httpSession){
+			Product product=productDao.getProductByProductId(productId);
+			httpSession.setAttribute("product", product);
+			ModelAndView modelAndView=new ModelAndView("adminProductUpdateView","command",product);
+			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();
+			httpSession.setAttribute("productBrands",productBrands);
+			return modelAndView;
+			
+		}
+		
+		
+		
+		
+		
+		@RequestMapping(value="/updateProduct",method=RequestMethod.POST)
+		public ModelAndView updateProduct(@ModelAttribute("Product") Product product,HttpServletRequest request, 
+				@RequestParam("productImageFile") MultipartFile productImageFile,HttpSession httpSession){ 
+			System.out.println("at updateProduct"+product.getProductId());
+			ModelAndView modelAndView=new ModelAndView("adminProductView","command",new Product());
+			ProductSubCategory productSubCategory=(ProductSubCategory)httpSession.getAttribute("productSubCategory");
+			/*int productId=((Product)httpSession.getAttribute("product")).getProductId();
+			product.setProductId(productId);*/
+			
+				//code for uploadding the file
+				
+				byte fileBytes[];
+				FileOutputStream fos = null;
+				
+				String fileName = "";
+				String productImage = "";
+				ServletContext context = request.getServletContext();
+				String realContextPath = context.getRealPath("/");
+				String productName = product.getProductName();
+				if (productImageFile != null){
+					fileName = realContextPath + "/resources/images/productimages/" + productName + ".jpg";
+					productImage = "resources/images/productimages/" + productName + ".jpg";
+					System.out.println("===" + fileName + "===");
+					File fileobj = new File(fileName);
+					try{
+						fos = new FileOutputStream(fileobj);
+						fileBytes = productImageFile.getBytes();
+						fos.write(fileBytes);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				
+					product.setProductImage(productImage);	
+				
+				//ends
+		    	productDao.updateProduct(product);
+		    	
+		    	modelAndView.addObject("successMessage","product updated successfully");
+	        
+			}else {
+				
+				modelAndView.addObject("errorMessage","failed to update product");
 				
 			}
 			List<ProductBrand> productBrands =productBrandDao.getAllProductBrands();

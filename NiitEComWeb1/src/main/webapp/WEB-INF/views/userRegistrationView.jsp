@@ -57,22 +57,39 @@
 			</div>
 	</header>
 	
+	<c:if test="${successMessage!=null}">
+	<div class="alert alert-success alert-dismissable container">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 	  ${successMessage}
+	</div>
+	</c:if>
 	
+	<c:if test="${errorMessage!=null}">
+	<div class="alert alert-danger alert-dismissable container">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 	 <strong>Upps!</strong> ${errorMessage}
+	</div>
+	</c:if>
 	<section id="form"><!--form-->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-11 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
-						<h2>Login to your account</h2>
-						<form name='f' method="post" action="${pageContext.request.contextPath}/j_spring_security_check" >
-							<input type="text" placeholder="Username" name='username'/>
-							<input type="password" placeholder="Password" name='password' />
-							<span>
-								<input type="checkbox" class="checkbox"> 
-								Keep me signed in
-							</span>
-							<button type="submit" class="btn btn-default">Login</button>
-						</form>
+						<h2>Please SignUp</h2>
+						<form:form  method="post" action="${pageContext.request.contextPath}/registerUser" >
+							<form:input type="text" class="form-control" placeholder="Username" path='userName'/>
+							<form:input type="text" class="form-control" placeholder="UserId" path='userId'/>
+							<form:input type="password" class="form-control" placeholder="Password" path='password' />
+							<form:input type="email" class="form-control" placeholder="EmailId" path='userEmailId'/>
+							<form:textarea rows="5"  placeholder="Address" path="userAddress"/>
+							<br>
+							<br>
+							<form:input type="number" class="form-control" placeholder="Contact No 1" path="userContactNo1"/>
+							<form:input type="number" class="form-control" placeholder="Contact No 2" path="userContactNo2"/>
+							
+							
+							<button type="submit" class="btn btn-default">SignUp</button>
+						</form:form>
 					</div><!--/login form-->
 				</div>
 				<div class="col-sm-1">
