@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<footer id="footer"><!--Footer-->
+<%-- <footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">
 				<div class="row">
@@ -148,7 +148,7 @@
 					
 				</div>
 			</div>
-		</div>
+		</div> --%>
 		
 		<div class="footer-bottom">
 			<div class="container">

@@ -36,14 +36,14 @@
                                       </c:forEach>
                                     </ul>
                                 </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+							<!--	<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
+                                         <li><a href="blog.html">Blog List</a></li>
 										<li><a href="blog-single.html">Blog Single</a></li>
                                     </ul>
                                 </li> 
 								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
+								<li><a href="contact-us.html">Contact</a></li> -->
 							</ul>
 						</div>
 					</div>
@@ -57,9 +57,14 @@
 			</div>
 	</header>
 	
+	<c:if test="${cartItems==null}">
+	<div class="alert alert-success alert-dismissable">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>No items present .</strong> 
+</div>
+	</c:if>
 	
-	
-	
+	<c:if test="${cartItems!=null}">
 	<section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -108,6 +113,11 @@
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
+	</c:if>
+	
+	
+	
+	
 
 	<section id="do_action">
 		<div class="container">
@@ -120,9 +130,9 @@
 				<div class="col-sm-12">
 					<div class="total_area">
 						<ul>
-							<li>Cart Sub Total <span>$59</span></li>
+							<!-- <li>Cart Sub Total <span>$59</span></li>
 							<li>Eco Tax <span>$2</span></li>
-							<li>Shipping Cost <span>Free</span></li>
+							<li>Shipping Cost <span>Free</span></li> -->
 							<li>Total <span>&#x20B9; ${cart.cartTotal}</span></li>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>

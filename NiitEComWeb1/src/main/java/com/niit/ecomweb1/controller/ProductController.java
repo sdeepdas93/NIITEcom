@@ -1,6 +1,7 @@
 package com.niit.ecomweb1.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -29,9 +30,17 @@ public class ProductController {
 	ProductDao productDao;
 	@Autowired
 	UserDao userDao;
+	
+	@RequestMapping("/")
+	public ModelAndView startView(){
+		
+		ModelAndView mv=new ModelAndView("redirect:/productCategoryView");
+		return mv;
+	}
 
 	@RequestMapping("/productCategoryView")
 	public ModelAndView prductCategoryView(HttpSession httpSession){
+		System.out.println("httpSession");
 		ModelAndView mv=new ModelAndView("productCategoryView");
 		//List<ProductCategory> productCategories=productCategoryDao.getAllProductCategorys();
 		//System.out.println("im here");
@@ -39,10 +48,10 @@ public class ProductController {
 			System.out.println(productCategory.getProductCategoryName());*/
 		//mv.addObject("productCategories", productCategoryDao.getAllProductCategorys());
 		httpSession.setAttribute("productCategories", productCategoryDao.getAllProductCategorys());
+		httpSession.setAttribute("products", productDao.getAllProducts());
 		mv.addObject("productBrands",productBrandDao.getAllProductBrands());
 		
-		for(ProductBrand productBrand: productBrandDao.getAllProductBrands())
-			System.out.println(productBrand.getProductBrandName());
+		
 		return mv;
 		
 		
@@ -62,8 +71,16 @@ public class ProductController {
 		httpSession.setAttribute("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));
 		//mv.addObject("productSubCategories", productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory));
 		
+		List<ProductSubCategory> productSubCategories=productSubCategoryDao.getProductSubCategoriesByProductCategory(productCategory);
+		List<Product> products =new ArrayList<Product>();
+		for(ProductSubCategory productSubCategory: productSubCategories){
+			
+				products.addAll(productDao.getProductsByProductSubCategory(productSubCategory));
+			
+			
+		}
 		
-		
+		httpSession.setAttribute("products", products);
 		return mv;
 		
 	}

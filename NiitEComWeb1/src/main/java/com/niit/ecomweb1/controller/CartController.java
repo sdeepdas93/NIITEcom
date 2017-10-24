@@ -57,7 +57,7 @@ public class CartController {
 		httpSession.setAttribute("cartItems", cartItems);
 		double total=0;
 		//CartItem cartItem2;
-		/*if(cartItems!=null){
+		if(cartItems!=null){
 			
 			for(CartItem cartItem:cartItems){
 				total+=cartItem.getCartItemSubtotal();
@@ -66,7 +66,7 @@ public class CartController {
 			cart.setCartTotal(total);
 			System.out.println("*************************cartid"+cart.getCartId());
 			cartDao.updateCart(cart);
-		}*/
+		}
 		httpSession.setAttribute("cart", cart);
 		return modelAndView;
 				
@@ -104,8 +104,8 @@ public class CartController {
 					cartItem.setCartItemSubtotal(cartItemSubtotal);
 					cartItemDao.updatecartItem(cartItem);
 					
-					cart.setCartTotal(cart.getCartTotal()+productPrice);
-					cartDao.updateCart(cart);
+					//cart.setCartTotal(cart.getCartTotal()+productPrice);
+					//cartDao.updateCart(cart);
 					
 					return modelAndView;
 					
@@ -122,9 +122,24 @@ public class CartController {
 		cartItem.setCartItemSubtotal(product.getProductPrice());
 		cartItemDao.insertCartItem(cartItem);
 		
-		cart.setCartTotal(cart.getCartTotal()+product.getProductPrice());
-		cartDao.updateCart(cart);
+		//cart.setCartTotal(cart.getCartTotal()+product.getProductPrice());
+		//cartDao.updateCart(cart);
 		
+		return modelAndView;
+		
+		
+	}
+	
+	@RequestMapping("/deleteCartItem/{cartItemId}")
+	public ModelAndView deleteCartItem(@PathVariable int cartItemId, Principal principal, HttpSession httpSession){
+		ModelAndView modelAndView=new ModelAndView("redirect:/cartView");
+		CartItem cartItem=cartItemDao.getCartItembyCartItemId(cartItemId);
+		Cart cart=cartItem.getCart();
+		cart.setCartTotal(cart.getCartTotal()-cartItem.getCartItemSubtotal());
+		
+		System.out.println("carttotal from delete cart"+cart.getCartTotal());
+		cartItemDao.deletecartItem(cartItem);
+		//cartDao.updateCart(cart);
 		return modelAndView;
 		
 		

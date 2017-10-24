@@ -51,13 +51,14 @@ public class CartItemDaoImpl implements CartItemDao {
 		Session session=getSession();
 		try{
 			session.delete(cartItem);
+			session.flush();
+			session.close();
 			return true;
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return false;
 		}finally {
-			session.flush();
-			session.close();
+			
 		}
 		
 	}
@@ -120,6 +121,7 @@ public class CartItemDaoImpl implements CartItemDao {
 		try{
 			Query query=session.createQuery("From CartItem where cartItemId =?");
 			query.setParameter(0, cartItemId);
+			
 			return (CartItem) query.uniqueResult();
 		}
 		catch(HibernateException e){
