@@ -33,6 +33,7 @@ xmlns:beans="http://www.springframework.org/schema/beans"
         <intercept-url pattern="/userProductSubCategoryView" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/userProductCategoryView" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
         <intercept-url pattern="/cartView" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+        <intercept-url pattern="/addToCart/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
         
         
  

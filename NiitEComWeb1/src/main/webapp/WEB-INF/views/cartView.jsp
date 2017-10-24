@@ -57,14 +57,14 @@
 			</div>
 	</header>
 	
-	<c:if test="${cartItems==null}">
+	<c:if test="${cartItems.isEmpty()}">
 	<div class="alert alert-success alert-dismissable">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>No items present .</strong> 
 </div>
 	</c:if>
 	
-	<c:if test="${cartItems!=null}">
+	<c:if test="${!cartItems.isEmpty()}">
 	<section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -121,10 +121,10 @@
 
 	<section id="do_action">
 		<div class="container">
-			<div class="heading">
+			<!-- <div class="heading">
 				<h3>What would you like to do next?</h3>
 				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-			</div>
+			</div> -->
 			<div class="row">
 				
 				<div class="col-sm-12">
@@ -135,8 +135,8 @@
 							<li>Shipping Cost <span>Free</span></li> -->
 							<li>Total <span>&#x20B9; ${cart.cartTotal}</span></li>
 						</ul>
-							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out" href="">Check Out</a>
+							<!-- <a class="btn btn-default update" href="">Update</a>
+							<a class="btn btn-default check_out" href="">Check Out</a> -->
 					</div>
 				</div>
 			</div>

@@ -160,10 +160,12 @@
 									<span>&#x20B9;${product.productPrice}</span>
 									<label>Quantity:</label>
 									<input type="text" value="3" />
-									<button type="button" class="btn btn-fefault cart">
+									<a class="btn btn-default update" href="${context}/addToCart/${product.productId}">
+									Add to cart <i class="fa fa-shopping-cart"></i></a>
+									<!-- <button type="button" class="btn btn-fefault cart">
 										<i class="fa fa-shopping-cart"></i>
 										Add to cart
-									</button>
+									</button> -->
 								</span>
 								<p><b>Availability:</b> In Stock</p>
 								<p><b>Condition:</b> New</p>
