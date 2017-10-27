@@ -9,8 +9,8 @@ import com.niit.ecomweb1.model.CartItem;
 
 public interface CartItemDao {
 	public boolean insertCartItem(CartItem cartItem);
-	public boolean deletecartItem(CartItem cartItem);
-	public boolean updatecartItem(CartItem cartItem);
+	public boolean deleteCartItem(CartItem cartItem);
+	public boolean updateCartItem(CartItem cartItem);
 	public List<CartItem> getAllCartItems();
 	public List<CartItem> getCartItemsByCart(Cart cart);
 	public CartItem getCartItembyCartItemId(int cartItemId);

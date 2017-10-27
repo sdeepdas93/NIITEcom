@@ -18,7 +18,7 @@ public class Bill {
 	private Address address;
 	@OneToOne
 	@JoinColumn(name="orderId")
-	private Order order;
+	private OrderDetails order;
 	@OneToOne
 	@JoinColumn(name="billDetailsId")
 	BillDetails billDetails;
@@ -37,10 +37,10 @@ public class Bill {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	public Order getOrder() {
+	public OrderDetails getOrder() {
 		return order;
 	}
-	public void setOrder(Order order) {
+	public void setOrder(OrderDetails order) {
 		this.order = order;
 	}
 	public BillDetails getBillDetails() {

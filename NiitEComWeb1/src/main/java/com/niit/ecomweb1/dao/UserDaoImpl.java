@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.niit.ecomweb1.model.Order;
+import com.niit.ecomweb1.model.OrderDetails;
 import com.niit.ecomweb1.model.ProductReview;
 import com.niit.ecomweb1.model.User;
 @Repository("userDao")

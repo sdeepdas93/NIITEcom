@@ -1,5 +1,6 @@
 package com.niit.ecomweb1.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class ProductBrand {
+public class ProductBrand implements Serializable{
 	@Id
 	private int productBrandId;
 	private String productBrandName;

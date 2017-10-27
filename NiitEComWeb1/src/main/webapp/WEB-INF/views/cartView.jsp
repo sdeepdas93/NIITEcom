@@ -134,6 +134,16 @@
 							<li>Eco Tax <span>$2</span></li>
 							<li>Shipping Cost <span>Free</span></li> -->
 							<li>Total <span>&#x20B9; ${cart.cartTotal}</span></li>
+							<form:form action="addToOrderDetails" method="post">
+							<li> <form:input path="orderDetailsAddress" placeholder="Address"/> </li>
+							<li> <form:input path="orderDetailsPin" placeholder="PIN Code"/> </li>
+							<%-- <form:hidden path="user"/>  --%> 
+							<form:hidden path="orderDetailsTotal"/>
+							<li><input class="btn btn-default update" type="submit" value="Check Out"> </li>
+							
+							
+							
+							</form:form>
 						</ul>
 							<!-- <a class="btn btn-default update" href="">Update</a>
 							<a class="btn btn-default check_out" href="">Check Out</a> -->

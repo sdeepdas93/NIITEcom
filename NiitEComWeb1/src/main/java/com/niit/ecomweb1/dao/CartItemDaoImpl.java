@@ -46,40 +46,9 @@ public class CartItemDaoImpl implements CartItemDao {
 		
 	}
 
-	public boolean deletecartItem(CartItem cartItem) {
-		// TODO Auto-generated method stub
-		Session session=getSession();
-		try{
-			session.delete(cartItem);
-			session.flush();
-			session.close();
-			return true;
-		}catch(HibernateException e){
-			e.printStackTrace();
-			return false;
-		}finally {
-			
-		}
-		
-	}
+	
 
-	public boolean updatecartItem(CartItem cartItem) {
-		// TODO Auto-generated method stub
-		Session session=getSession();
-		try{
-			session.update(cartItem);
-			
-			return true;
-		}catch(HibernateException e){
-			e.printStackTrace();
-			return false;
-		}finally {
-			session.flush();
-			session.close();
-			
-		}
-		
-	}
+
 
 	public List<CartItem> getAllCartItems() {
 		// TODO Auto-generated method stub
@@ -98,8 +67,9 @@ public class CartItemDaoImpl implements CartItemDao {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			Query query=session.createQuery("From CartItem where cart.cartId = ?");
+			Query query=session.createQuery("From CartItem where cart.cartId = ? And cartItemStatus = ?");
 			query.setInteger(0, cart.getCartId());
+			query.setString(1, "NOTORDERRED");
 			
 			return query.list();
 			
@@ -129,5 +99,41 @@ public class CartItemDaoImpl implements CartItemDao {
 			return null;
 		}
 	}
+
+	public boolean deleteCartItem(CartItem cartItem) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		try{
+			session.delete(cartItem);
+			
+			return true;
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return false;
+		}finally {
+			session.flush();
+			session.close();
+			
+		}
+	}
+
+	public boolean updateCartItem(CartItem cartItem) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		try{
+			session.update(cartItem);
+			
+			return true;
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return false;
+		}finally {
+			session.flush();
+			session.close();
+			
+		}
+	}
+
+
 
 }

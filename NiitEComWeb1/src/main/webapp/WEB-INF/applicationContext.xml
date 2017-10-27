@@ -17,7 +17,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
       <bean id="dataSource"
             class="org.springframework.jdbc.datasource.DriverManagerDataSource">
             <property name="driverClassName" value="org.h2.Driver" />
-            <property name="url" value="jdbc:h2:tcp://localhost/~/subhadeepdas93_2" />
+            <property name="url" value="jdbc:h2:tcp://localhost/~/subhadeepdas93_3" />
             <property name="username" value="sa" />
             <property name="password" value="sa" />
       </bean>
@@ -51,7 +51,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                   <value>com.niit.ecomweb1.model.ProductCategory</value>
                   <value>com.niit.ecomweb1.model.ProductSubCategory</value>
                   <value>com.niit.ecomweb1.model.Supplier</value>
-                  <value>com.niit.ecomweb1.model.Order</value>
+                  <value>com.niit.ecomweb1.model.OrderDetails</value>
                    
             </list>
       </property>

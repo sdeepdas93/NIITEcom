@@ -13,13 +13,23 @@ public class CartItem implements Serializable{
 	@Id
 	@GeneratedValue
 	private int cartItemId;
-	
+	private String cartItemStatus;
 	@OneToOne
 	@JoinColumn(name="productId")
 	private Product product;
 	@ManyToOne
 	@JoinColumn(name="cartId")
 	private Cart cart;
+	
+	@ManyToOne
+	@JoinColumn(name="orderDetailsId")
+	private OrderDetails orderDetails;
+	public OrderDetails getOrderDetails() {
+		return orderDetails;
+	}
+	public void setOrderDetails(OrderDetails orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 	private int cartItemQuantity;
 	private double cartItemSubtotal;
 	public Product getProduct() {
@@ -54,6 +64,12 @@ public class CartItem implements Serializable{
 	}
 	public void setCartItemSubtotal(double cartItemSubtotal) {
 		this.cartItemSubtotal = cartItemSubtotal;
+	}
+	public String getCartItemStatus() {
+		return cartItemStatus;
+	}
+	public void setCartItemStatus(String cartItemStatus) {
+		this.cartItemStatus = cartItemStatus;
 	}
 	
 }

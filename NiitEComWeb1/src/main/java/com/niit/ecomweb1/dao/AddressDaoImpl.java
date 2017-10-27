@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.ecomweb1.model.Address;
-import com.niit.ecomweb1.model.Order;
+import com.niit.ecomweb1.model.OrderDetails;
 import com.niit.ecomweb1.model.Supplier;
 import com.niit.ecomweb1.model.User;
 

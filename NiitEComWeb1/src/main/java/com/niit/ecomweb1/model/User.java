@@ -31,7 +31,7 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<ProductReview>  productReviews;
 	@OneToMany(mappedBy="user")
-	private List<Order> orders;
+	private List<OrderDetails> orderDetailsList;
 	
 	@OneToMany(mappedBy="user")
 	private List<Bill> bills;
@@ -136,13 +136,15 @@ public class User {
 	public void setProductReviews(List<ProductReview> productReviews) {
 		this.productReviews = productReviews;
 	}
+	public List<OrderDetails> getOrderDetailsList() {
+		return orderDetailsList;
+	}
+	public void setOrderDetailsList(List<OrderDetails> orderDetailsList) {
+		this.orderDetailsList = orderDetailsList;
+	}
 	
-	public List<Order> getOrders() {
-		return orders;
-	}
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
+	
+	
 	
 	
 	

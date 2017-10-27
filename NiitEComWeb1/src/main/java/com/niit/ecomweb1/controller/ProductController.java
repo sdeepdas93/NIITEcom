@@ -162,12 +162,14 @@ public class ProductController {
 	}
 	
 	//will be modified
-	@RequestMapping(value="userProductDetailsView")
-	public ModelAndView userProductDetailsView(){
+	/*@RequestMapping(value="userProductDetailsView")
+	public ModelAndView userProductDetailsView(Principal principal,HttpSession httpSession){
 		ModelAndView mv=new ModelAndView("productDetailsView");
+		Us
+		
 		return mv;
 	}
-	
+	*/
 	
 	
 	
