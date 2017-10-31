@@ -79,4 +79,12 @@ public class UserController {
 		
 	}
 	
+	
+	
+	
+	@RequestMapping("/404")
+	ModelAndView accessDenied(){
+		return new ModelAndView("404");
+	}
+	
 }

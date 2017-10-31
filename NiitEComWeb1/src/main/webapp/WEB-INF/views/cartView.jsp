@@ -58,14 +58,17 @@
 	</header>
 	
 	<c:if test="${cartItems.isEmpty()}">
+	<div class="container">
 	<div class="alert alert-success alert-dismissable">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
   <strong>No items present .</strong> 
+  </div>
 </div>
 	</c:if>
 	
-	<c:if test="${!cartItems.isEmpty()}">
+	
 	<section id="cart_items">
+	<%-- <c:if test="${!cartItems.isEmpty()}"> --%>
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
@@ -112,14 +115,16 @@
 				</table>
 			</div>
 		</div>
+		<%-- </c:if> --%>
 	</section> <!--/#cart_items-->
-	</c:if>
+	
 	
 	
 	
 	
 
 	<section id="do_action">
+	<%-- <c:if test="${!cartItems.isEmpty()}"> --%>
 		<div class="container">
 			<!-- <div class="heading">
 				<h3>What would you like to do next?</h3>
@@ -135,8 +140,8 @@
 							<li>Shipping Cost <span>Free</span></li> -->
 							<li>Total <span>&#x20B9; ${cart.cartTotal}</span></li>
 							<form:form action="addToOrderDetails" method="post">
-							<li> <form:input path="orderDetailsAddress" placeholder="Address"/> </li>
-							<li> <form:input path="orderDetailsPin" placeholder="PIN Code"/> </li>
+							<li> <form:textarea rows="5"  placeholder="Address" path="orderDetailsAddress" class="form-control"/> </li>
+							<li> <form:input path="orderDetailsPin" class="form-control" placeholder="PIN Code"/> </li>
 							<%-- <form:hidden path="user"/>  --%> 
 							<form:hidden path="orderDetailsTotal"/>
 							<li><input class="btn btn-default update" type="submit" value="Check Out"> </li>
@@ -151,6 +156,7 @@
 				</div>
 			</div>
 		</div>
+		<%-- </c:if> --%>
 	</section><!--/#do_action-->
 	
 	

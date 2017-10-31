@@ -59,7 +59,7 @@ xmlns:beans="http://www.springframework.org/schema/beans"
         
         <intercept-url pattern="/other/**" access="isAuthenticated()" />
  
-        <access-denied-handler error-page="/403" />
+        <access-denied-handler error-page="/404" />
  
         <form-login login-page='/loginPage' login-processing-url="/j_spring_security_check"
             default-target-url="/userProductCategoryView" always-use-default-target="false"
