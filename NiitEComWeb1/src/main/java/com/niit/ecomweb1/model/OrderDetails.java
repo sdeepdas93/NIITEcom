@@ -19,7 +19,7 @@ public class OrderDetails implements Serializable{
 	@GeneratedValue
 	private int orderDetailsId;
 	
-	private boolean orderDetailsDeliverd;
+	private String OrderDetailsStatus;
 	
 	@OneToMany(mappedBy="orderDetails")
 	List<CartItem> cartItems;
@@ -81,12 +81,13 @@ public class OrderDetails implements Serializable{
 	public void setOrderDetailsTotal(double orderDetailsTotal) {
 		this.orderDetailsTotal = orderDetailsTotal;
 	}
-	public boolean isOrderDetailsDeliverd() {
-		return orderDetailsDeliverd;
+	public String getOrderDetailsStatus() {
+		return OrderDetailsStatus;
 	}
-	public void setOrderDetailsDeliverd(boolean orderDetailsDeliverd) {
-		this.orderDetailsDeliverd = orderDetailsDeliverd;
+	public void setOrderDetailsStatus(String orderDetailsStatus) {
+		OrderDetailsStatus = orderDetailsStatus;
 	}
+	
 
 	
 	

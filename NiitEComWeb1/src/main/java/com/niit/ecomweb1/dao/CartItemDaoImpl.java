@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.ecomweb1.model.Cart;
 import com.niit.ecomweb1.model.CartItem;
+import com.niit.ecomweb1.model.OrderDetails;
 @Repository("cartItemDao")
 @Transactional
 public class CartItemDaoImpl implements CartItemDao {
@@ -127,6 +128,28 @@ public class CartItemDaoImpl implements CartItemDao {
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return false;
+		}finally {
+			session.flush();
+			session.close();
+			
+		}
+	}
+
+	public List<CartItem> getCartItemsByOrderdetails(OrderDetails orderDetails) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		try{
+			Query query=session.createQuery("From CartItem where orderDetails.orderDetailsId = ? And cartItemStatus = ?");
+			query.setInteger(0, orderDetails.getOrderDetailsId());
+			query.setString(1, "ORDERRED");
+			
+			return query.list();
+			
+			
+		}
+		catch(HibernateException e){
+			e.printStackTrace();
+			return null;
 		}finally {
 			session.flush();
 			session.close();

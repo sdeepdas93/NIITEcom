@@ -57,7 +57,7 @@
 			</div>
 	</header>
 	
-	<c:if test="${cartItems.isEmpty()}">
+	<c:if test="${listOfCartItems.isEmpty()}">
 	<div class="container">
 	<div class="alert alert-success alert-dismissable">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -77,6 +77,7 @@
 				  <li class="active">Order Details</li>
 				</ol>
 			</div>
+			<c:forEach items="${listOfCartItems}" var="cartItems" varStatus="status">
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<thead>
@@ -110,13 +111,39 @@
 								<a class="cart_quantity_delete" href="${context}/deleteCartItem/${cartItem.cartItemId}"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
+						
 						</c:forEach>
+						
+						<tr>
+							<td colspan="4">&nbsp;</td>
+							<td colspan="2">
+								<table class="table table-condensed total-result">
+									<tr>
+										<td>Ordered On</td>
+										<td>${(orderDetailsList[status.index]).orderDetailsDate}</td>
+									</tr>
+									<tr>
+										<td>Exo Tax</td>
+										<td>$2</td>
+									</tr>
+									<tr class="shipping-cost">
+										<td>Status</td>
+										<td>${(orderDetailsList[status.index]).orderDetailsStatus}</td>										
+									</tr>
+									<tr>
+										<td>Total</td>
+										<td><span>${(orderDetailsList[status.index]).orderDetailsTotal}</span></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
 						
 					</tbody>
 				</table>
-			</div>
+			</div> </c:forEach>
 		</div>
 		<%-- </c:if> --%>
 	</section> <!--/#cart_items-->
+	
 	<jsp:include page="footer.jsp"></jsp:include>
 	

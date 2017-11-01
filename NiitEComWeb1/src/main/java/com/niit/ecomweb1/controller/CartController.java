@@ -1,6 +1,8 @@
 package com.niit.ecomweb1.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -219,7 +221,22 @@ public class CartController {
 	@RequestMapping("/orderDetailsView")
 	ModelAndView orderDetailsView(Principal principal,HttpSession httpSession){
 		ModelAndView modelAndView=new ModelAndView("orderDetailsView");
-		httpSession.setAttribute("orderDetailsList",orderDetailsDao.getOrderDetailsListByUser(userDao.getUserByUserId(principal.getName())));
+		List<OrderDetails> orderDetailsList=orderDetailsDao.getOrderDetailsListByUser(userDao.getUserByUserId(principal.getName()));
+		if(orderDetailsList.isEmpty())
+			System.out.println("**************************************order details list is empty");
+		
+		List<List<CartItem>> listOfCartItems=new ArrayList<List<CartItem>>();
+		for(OrderDetails orderDetails:orderDetailsList){
+			List<CartItem> cartItems=new ArrayList<CartItem>();
+			cartItems.addAll(cartItemDao.getCartItemsByOrderdetails(orderDetails));
+			listOfCartItems.add(cartItems);
+		}
+				
+		
+		
+		
+		httpSession.setAttribute("orderDetailsList",orderDetailsList);
+		httpSession.setAttribute("listOfCartItems",listOfCartItems);
 		return modelAndView;
 	}
 	
