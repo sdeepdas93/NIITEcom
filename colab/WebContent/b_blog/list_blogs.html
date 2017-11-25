@@ -1,0 +1,13 @@
+
+<div class="col-md-12" ng-repeat="blog in ctrl.blogs"
+		ng-hide="blog.status=='R'">
+	<section class="panel">
+                          <div class="panel-body">
+                          <h3>{{blog.blogTitle}}</h3>
+							<p>Written By : {{blog.blogUserId}}</p>
+                              <button data-original-title="Popovers in top" ng-click="ctrl.getSelectedBlog(blog.blogId)" data-content="And here's some amazing content. It's very engaging. right?" data-placement="top" data-trigger="hover" class="btn btn-info popovers">Know More</button>
+                              </div>
+     </section>
+	
+	</div>
+	
