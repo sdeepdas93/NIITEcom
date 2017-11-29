@@ -11,18 +11,18 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.collaboration.model.Blog;
+import com.niit.collaboration.model.Forum;
 
 
-@Repository("blogDao")
+@Repository("ForumDao")
 @Transactional
-public class BlogDaoImpl implements BlogDao {
-	
-	
-@Autowired
+public class ForumDaoImpl implements ForumDao {
+
+	@Autowired
 	private SessionFactory sessionFactory;
 	
 
-	public BlogDaoImpl(SessionFactory sessionFactory){
+	public ForumDaoImpl(SessionFactory sessionFactory){
 		this.sessionFactory=sessionFactory;
 	}
 	
@@ -37,16 +37,15 @@ public class BlogDaoImpl implements BlogDao {
 	protected Session getSession(){
 		return sessionFactory.openSession();
 	}
-		
-
-	public List<Blog> getAllBlogs() {
+	
+	public List<Forum> getAllForums() {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		
 		try{
-			Query query=session.createQuery("from Blog");
-			List<Blog> blogs=query.list();
-			return blogs;
+			Query query=session.createQuery("from Forum");
+			List<Forum> forums=query.list();
+			return forums;
 			
 		}catch(HibernateException e){
 			e.printStackTrace();
@@ -54,11 +53,26 @@ public class BlogDaoImpl implements BlogDao {
 		}
 	}
 
-	public boolean saveBlog(Blog blog) {
+	public boolean saveForum(Forum forum) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			session.save(blog);
+			session.save(forum);
+			session.flush();
+			session.close();
+			return true;
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+
+	public boolean deleteForum(Forum forum) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		try{
+			session.delete(forum);
 			session.flush();
 			session.close();
 			return true;
@@ -68,16 +82,11 @@ public class BlogDaoImpl implements BlogDao {
 		}
 	}
 
-	public boolean deleteBlog(Blog blog) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean updateBlog(Blog blog) {
+	public boolean updateForum(Forum forum) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			session.update(blog);
+			session.update(forum);
 			session.flush();
 			session.close();
 			return true;
@@ -87,20 +96,27 @@ public class BlogDaoImpl implements BlogDao {
 		}
 	}
 
-	public Blog getBlogByBlogId(int blogId) {
+	public Forum getForumByForumId(int forumId) {
 		// TODO Auto-generated method stub
 Session session=getSession();
 		
 		try{
-			Query query=session.createQuery("from Blog where blogId = ?");
-			query.setInteger(0, blogId);
-			Blog blog=(Blog) query.uniqueResult();
-			return blog;
+			Query query=session.createQuery("from Forum where forumId = ?");
+			query.setInteger(0, forumId);
+			Forum forum=(Forum) query.uniqueResult();
+			return forum;
 			
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
 		}
 	}
+	
+
+	
+	
+	
+		
+
 
 }

@@ -25,6 +25,9 @@ public class UserController {
 	@Autowired
 	UserDao userDao;
 	
+	
+	//http://localhost:8080/collaboration/
+	
 	@GetMapping(value = "/users")
 	public ResponseEntity<List<User>> listUser() {
 		

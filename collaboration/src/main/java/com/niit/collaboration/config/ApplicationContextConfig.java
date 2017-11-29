@@ -61,8 +61,9 @@ public class ApplicationContextConfig {
 		//specify all the model classes... 
 		sessionBuilder.addAnnotatedClass(User.class);			
 		sessionBuilder.addAnnotatedClass(Blog.class);	
-		/*sessionBuilder.addAnnotatedClass(Forum.class);	
-		sessionBuilder.addAnnotatedClass(ForumComment.class);*/
+		sessionBuilder.addAnnotatedClass(BlogComment.class);	
+		sessionBuilder.addAnnotatedClass(Forum.class);	
+		sessionBuilder.addAnnotatedClass(ForumComment.class);
 		/*sessionBuilder.addAnnotatedClass(Event.class);	
 		sessionBuilder.addAnnotatedClass(Friend.class);	
 		sessionBuilder.addAnnotatedClass(Job.class);		

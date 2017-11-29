@@ -19,18 +19,19 @@ public class Blog extends BaseDomain implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	String blogId;
+	int blogId;
 	String blogReason;
 	String blogContent;
 	String blogTitle;
 	Date blogDate;
-	String blogUserId;
+	String userId;
 	String blogStatus;
 	int blogCountLike;
-	public String getBlogId() {
+	
+	public int getBlogId() {
 		return blogId;
 	}
-	public void setBlogId(String blogId) {
+	public void setBlogId(int blogId) {
 		this.blogId = blogId;
 	}
 	public String getBlogReason() {
@@ -51,12 +52,7 @@ public class Blog extends BaseDomain implements Serializable{
 	public void setBlogDate(Date blogDate) {
 		this.blogDate = blogDate;
 	}
-	public String getBlogUserId() {
-		return blogUserId;
-	}
-	public void setBlogUserId(String blogUserId) {
-		this.blogUserId = blogUserId;
-	}
+	
 	public String getBlogStatus() {
 		return blogStatus;
 	}
@@ -74,6 +70,12 @@ public class Blog extends BaseDomain implements Serializable{
 	}
 	public void setBlogTitle(String blogTitle) {
 		this.blogTitle = blogTitle;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	
