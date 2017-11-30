@@ -10,19 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.niit.collaboration.model.Blog;
 import com.niit.collaboration.model.Forum;
+import com.niit.collaboration.model.Job;
 
-
-@Repository("ForumDao")
+@Repository("jobDao")
 @Transactional
-public class ForumDaoImpl implements ForumDao {
+public class JobDaoImpl implements JobDao{
 
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 
-	public ForumDaoImpl(SessionFactory sessionFactory){
+	public JobDaoImpl(SessionFactory sessionFactory){
 		this.sessionFactory=sessionFactory;
 	}
 	
@@ -38,14 +37,14 @@ public class ForumDaoImpl implements ForumDao {
 		return sessionFactory.openSession();
 	}
 	
-	public List<Forum> getAllForums() {
+	public List<Job> getAllJobs() {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		
 		try{
-			Query query=session.createQuery("from Forum");
-			List<Forum> forums=query.list();
-			return forums;
+			Query query=session.createQuery("from Job");
+			List<Job> jobs=query.list();
+			return jobs;
 			
 		}catch(HibernateException e){
 			e.printStackTrace();
@@ -53,26 +52,11 @@ public class ForumDaoImpl implements ForumDao {
 		}
 	}
 
-	public boolean saveForum(Forum forum) {
+	public boolean saveJob(Job job) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		try{
-			session.save(forum);
-			session.flush();
-			session.close();
-			return true;
-		}catch(HibernateException e){
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
-
-	public boolean deleteForum(Forum forum) {
-		// TODO Auto-generated method stub
-		Session session=getSession();
-		try{
-			session.delete(forum);
+			session.save(job);
 			session.flush();
 			session.close();
 			return true;
@@ -82,29 +66,15 @@ public class ForumDaoImpl implements ForumDao {
 		}
 	}
 
-	public boolean updateForum(Forum forum) {
-		// TODO Auto-generated method stub
-		Session session=getSession();
-		try{
-			session.update(forum);
-			session.flush();
-			session.close();
-			return true;
-		}catch(HibernateException e){
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	public Forum getForumByForumId(int forumId) {
+	public Job getJobByJobId(int jobId) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
 		
 		try{
-			Query query=session.createQuery("from Forum where forumId = ?");
-			query.setInteger(0, forumId);
-			Forum forum=(Forum) query.uniqueResult();
-			return forum;
+			Query query=session.createQuery("from Job where jobId = ?");
+			query.setInteger(0, jobId);
+			Job job=(Job) query.uniqueResult();
+			return job;
 			
 		}catch(HibernateException e){
 			e.printStackTrace();
@@ -112,11 +82,8 @@ public class ForumDaoImpl implements ForumDao {
 		}
 	}
 	
-
 	
-	
-	
-		
-
-
 }
+
+
+

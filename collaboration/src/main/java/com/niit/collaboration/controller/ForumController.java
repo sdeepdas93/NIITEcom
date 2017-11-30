@@ -38,6 +38,7 @@ public class ForumController {
 	public ResponseEntity<List<Forum>> listForums(HttpSession session) {
 		try{
 		User user=(User) session.getAttribute("loggedInUser");
+		if(user==null)  return new ResponseEntity<List<Forum>>(HttpStatus.NO_CONTENT);
 		List<Forum> forums = forumDao.getAllForums();
 		if (forums.isEmpty()) {
 			return new ResponseEntity<List<Forum>>(HttpStatus.NO_CONTENT);
@@ -85,7 +86,16 @@ public class ForumController {
 	
 	
 	@GetMapping(value = "/forum/{forumId}")
-	public ResponseEntity<Forum> getBlog(@PathVariable("forumId") int forumId) {
+	public ResponseEntity<Forum> getForum(@PathVariable("forumId") int forumId,HttpSession session) {
+		try{
+			User user=(User) session.getAttribute("loggedInUser");
+			System.out.println(user.getUserId());
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			Forum forum=new Forum();
+			forum.setErrorMessage("user not lgged in");
+			return new ResponseEntity<Forum>(forum, HttpStatus.NOT_FOUND);
+		}
 		Forum forum=forumDao.getForumByForumId(forumId);
 		
 		if (forum == null) {
@@ -108,11 +118,12 @@ public class ForumController {
 		@GetMapping(value="/forumComments/{forumId}")
 		public ResponseEntity<List<ForumComment>> getForumComments(@PathVariable("forumId") int forumId,HttpSession session){
 			
+			User user=(User) session.getAttribute("loggedInUser");
 			
 			
 			
 			List<ForumComment> forumComments= forumCommentDao.getForumCommentsByForumId(forumId);
-			if(forumComments==null){
+			if((forumComments==null)||(user==null)){
 				return new ResponseEntity<List<ForumComment>>(forumComments,HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<List<ForumComment>>(forumComments, HttpStatus.OK);
@@ -122,14 +133,21 @@ public class ForumController {
 		@PostMapping(value="/forumComment/")
 		public ResponseEntity<ForumComment> saveBlogComment(@RequestBody ForumComment forumComment,HttpSession session){
 			User user=(User) session.getAttribute("loggedInUser");
-			
+			try{
 			//checking if the user doesnt exist or the blog doesnt exist
-			if((!(user.getUserId().equals(forumComment.getUserId())))||
-				(forumCommentDao.getForumCommentByForumCommentId(forumComment.getForumCommentId()))==null)	
-					{
-						forumComment.setErrorCode("404");
-						forumComment.setErrorMessage("BlogComment Not Created");
+				if((!(user.getUserId().equals(forumComment.getUserId())))||
+					(forumDao.getForumByForumId(forumComment.getForumId()))==null)	
+						{
+							forumComment.setErrorCode("404");
+							forumComment.setErrorMessage("forumcomment Not Created");
+							return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
+				}
+			}catch(NullPointerException e){
+				e.printStackTrace();
+				forumComment.setErrorCode("404");
+				forumComment.setErrorMessage("user not loggedin");
 				return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
+				
 			}
 			Date forumCommentDate=new Date(System.currentTimeMillis());
 			

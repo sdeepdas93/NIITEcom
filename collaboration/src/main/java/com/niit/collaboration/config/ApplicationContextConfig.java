@@ -64,9 +64,12 @@ public class ApplicationContextConfig {
 		sessionBuilder.addAnnotatedClass(BlogComment.class);	
 		sessionBuilder.addAnnotatedClass(Forum.class);	
 		sessionBuilder.addAnnotatedClass(ForumComment.class);
+		sessionBuilder.addAnnotatedClass(Job.class);
+		sessionBuilder.addAnnotatedClass(JobApplication.class);
+		sessionBuilder.addAnnotatedClass(FriendList.class);
 		/*sessionBuilder.addAnnotatedClass(Event.class);	
-		sessionBuilder.addAnnotatedClass(Friend.class);	
-		sessionBuilder.addAnnotatedClass(Job.class);		
+		sessionBuilder.addAnnotatedClass(FriendList.class);	
+				
 		sessionBuilder.addAnnotatedClass(Forum.class);	
 		sessionBuilder.addAnnotatedClass(ForumComment.class);
 		sessionBuilder.addAnnotatedClass(JobApplication.class);
