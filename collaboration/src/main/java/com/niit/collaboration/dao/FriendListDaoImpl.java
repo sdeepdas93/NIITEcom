@@ -71,7 +71,7 @@ public class FriendListDaoImpl implements FriendListDao {
 	public boolean deletefriendList(FriendList friendList){
 		Session session=getSession();
 		try{
-			session.update(friendList);
+			session.delete(friendList);
 			session.flush();
 			session.close();
 			return true;
@@ -104,11 +104,32 @@ public class FriendListDaoImpl implements FriendListDao {
 		try{
 			Query query=session.createQuery("from FriendList where (userId = :userId1 and friendId = userId2)"
 					+ " or (userId = :userId2 and friendId = userId1) and friendListStatus = :friendListStatus");
+			query.setParameter("userId1", userId1);
+			query.setParameter("userId2", userId2);
+			query.setParameter("friendListStatus", friendListStatus);
 			return (FriendList) query.uniqueResult();
 		}catch(HibernateException e){
 			e.printStackTrace();
 			return null;
 		}
 	}
+
+	public FriendList getFriendListifExistByUsers(String userId1, String userId2) {
+		// TODO Auto-generated method stub
+		Session session= getSession();
+		try{
+			Query query=session.createQuery("from FriendList where (userId = :userId1 and friendId = userId2)"
+					+ " or (userId = :userId2 and friendId = userId1)");
+			
+			query.setParameter("userId1", userId1);
+			query.setParameter("userId2", userId2);
+			return (FriendList) query.uniqueResult();
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	
 
 }
