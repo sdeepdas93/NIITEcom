@@ -1,0 +1,75 @@
+<!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col m7">
+         .   
+      
+    
+    <!-- End Left Column -->
+    </div>
+    
+    <!-- Middle Column -->
+    <div class="w3-col m5" >
+    
+      <div class="w3-row-padding">
+        <div class="w3-col m12">
+          <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+              <h6 class="w3-opacity">Join Colab today!</h6>
+			  <div ng-show='ctrl.user.errorMessage!=""'>
+						<div class="alart alart-danger fade in">
+							Error :	{{ctrl.user.errorMessage}}
+						</div>
+					</div>
+					<fieldset>
+						<legend>Login</legend>
+						<div class="form-inner">
+							<form ng-submit="ctrl.login()" name="myForm" >
+								<div class="one-half">
+									<input type="text" name="username" required 
+										placeholder="UserID" ng-model="ctrl.user.userId" autofocus class="form-control">
+								</div>
+								<br>
+								<div class="one-half">
+									<input type="password" name="password" required 
+										placeholder="Password" ng-model="ctrl.user.userPassword" class="form-control">
+								</div>
+								<br>
+								<div>
+									
+										<button type="submit" class="w3-button w3-theme btn btn-info"><i class="fa fa-sign-in"></i> login</button> 
+								</div>
+								<br>
+								<br>
+								<br>
+								
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								
+							</form>
+						</div>
+					</fieldset>
+
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    <!-- End Middle Column -->
+    </div>
+    
+    
+      
+    
+    
+  <!-- End Grid -->
+  </div>
+  
