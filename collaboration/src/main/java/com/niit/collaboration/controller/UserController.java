@@ -51,6 +51,32 @@ public class UserController {
 	}
 	
 	
+	@GetMapping(value="/user/{userId}")
+	public ResponseEntity<User> getUserByUserId(@PathVariable("userId") String userId,HttpSession session){
+		try{
+			User loggedInUser=(User)session.getAttribute("loggedInUser");
+			System.out.println(loggedInUser.getUserName()+" at get user by id");
+			User user=userDao.getUserByUserId(userId);
+			
+			if(user!=null){
+				return new ResponseEntity<User>(user,HttpStatus.OK);
+			}else{
+				user=new User();
+				user.setErrorCode("404");
+				user.setErrorMessage("user not found");
+				return new ResponseEntity<User>(user,HttpStatus.NOT_FOUND);
+			}
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			User user=new User();
+			user.setErrorCode("404");
+			user.setErrorMessage("not logged in");
+			return new ResponseEntity<User>(user,HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
 	
 	@PostMapping(value = "/user/")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -59,6 +85,7 @@ public class UserController {
 			user.setUserStatus("A");
 			user.setUserRole("USER");
 			user.setUserIsOnline("OFFLINE");
+			user.setUserImage("demo image");
 			user=userDao.saveUser(user);
 			
 //			if(user==null){
@@ -84,8 +111,58 @@ public class UserController {
 		
 	}*/
 	
+	//added on 12/08/2017
+	@PutMapping(value="/activateUser/{userId}")
+	public ResponseEntity<User> activateUser(@PathVariable("userId") String userId,HttpSession session){
+		try{
+				User user=userDao.getUserByUserId(userId);
+				if((((User)session.getAttribute("loggedInUser")).getUserRole().equals("ADMIN_USER"))||
+					(user!=null)){
+					user.setUserStatus("A");
+					userDao.updateUser(user);
+					return new  ResponseEntity<User>(user,HttpStatus.OK);
+				}else{
+					user=new User();
+					user.setErrorCode("404");
+					user.setErrorMessage("failed to activate user");
+					return new ResponseEntity<User>(user,HttpStatus.OK);
+				}
+			}catch(NullPointerException e){
+			e.printStackTrace();
+			User user=new User();
+			user.setErrorCode("404");
+			user.setErrorMessage("Admin not logged in");
+			return new ResponseEntity<User>(user,HttpStatus.OK);
+		}
+	}
+	
+	@PutMapping(value="/deactivateUser/{userId}")
+	public ResponseEntity<User> deactivateUser(@PathVariable("userId") String userId,HttpSession session){
+		try{
+				User user=userDao.getUserByUserId(userId);
+				if((((User)session.getAttribute("loggedInUser")).getUserRole().equals("ADMIN_USER"))||
+					(user!=null)){
+					user.setUserStatus("D");
+					userDao.updateUser(user);
+					return new  ResponseEntity<User>(user,HttpStatus.OK);
+				}else{
+					user=new User();
+					user.setErrorCode("404");
+					user.setErrorMessage("failed to deactivate user");
+					return new ResponseEntity<User>(user,HttpStatus.OK);
+				}
+			}catch(NullPointerException e){
+			e.printStackTrace();
+			User user=new User();
+			user.setErrorCode("404");
+			user.setErrorMessage("Admin not logged in");
+			return new ResponseEntity<User>(user,HttpStatus.OK);
+		}
+	}
 	
 	
+	
+	//need to be modified
 	@PutMapping(value = "/user/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable("id") String userId, @RequestBody User user, HttpSession session) {
 		if(userDao.getUserByUserId(userId)==null){
@@ -107,9 +184,13 @@ public class UserController {
 		
 		user = userDao.authenticateUser(user);
 		if(user==null){
-			user = new User();	//we need to create new users object to set errorMsg and errorCode...
+			user = new User();	
 			user.setErrorCode("404");
 			user.setErrorMessage("Invalid userId or password...");
+		}else if(user.getUserStatus().equals("D")){
+			user = new User();	
+			user.setErrorCode("404");
+			user.setErrorMessage("user has been deactivated");
 		}
 			
 		else {
