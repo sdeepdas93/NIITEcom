@@ -15,6 +15,7 @@ public class JobApplication extends BaseDomain implements Serializable {
 	private int jobApplicationId;
 	private String userId;
 	private int jobId;
+	private String jobApplicationStatus;
 	public int getJobApplicationId() {
 		return jobApplicationId;
 	}
@@ -32,6 +33,12 @@ public class JobApplication extends BaseDomain implements Serializable {
 	}
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
+	}
+	public String getJobApplicationStatus() {
+		return jobApplicationStatus;
+	}
+	public void setJobApplicationStatus(String jobApplicationStatus) {
+		this.jobApplicationStatus = jobApplicationStatus;
 	}
 	
 

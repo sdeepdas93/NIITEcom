@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,6 +50,28 @@ public class JobController {
 			
 	}
 	
+	@GetMapping(value = "/jobs/{jobId}")
+	public ResponseEntity<Job> getJobByJobId(@PathVariable("jobId") int jobId,HttpSession session){
+		try{
+				User user=(User) session.getAttribute("loggedInUser");
+				System.out.println(user.getUserName()+" at getJobByJobId");
+				Job job=jobDao.getJobByJobId(jobId);
+				if(job==null){
+					job.setErrorCode("404");
+					job.setErrorMessage("job not found");
+					return new ResponseEntity<Job>(job,HttpStatus.OK);
+				}else{
+					return new ResponseEntity<Job>(job,HttpStatus.OK);
+					}
+			
+			
+		}catch(NullPointerException e){
+			Job job=new Job();
+			job.setErrorCode("404");
+			job.setErrorMessage("user not logged in");
+			return new ResponseEntity<Job>(job,HttpStatus.OK);
+		}
+	}
 	
 	
 	@PostMapping(value="/job/")
@@ -95,6 +118,7 @@ public class JobController {
 			JobApplication jobApplication=new JobApplication();
 			jobApplication.setJobId(jobId);
 			jobApplication.setUserId(userId);
+			jobApplication.setJobApplicationStatus("N");
 			jobApplicationDao.saveJobApplication(jobApplication);
 			return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
 		
@@ -108,6 +132,54 @@ public class JobController {
 		}
 		
 		
+	}
+	
+	@PutMapping(value="/approveJobApplication/{jobApplicationId}")
+	public ResponseEntity<JobApplication>approveJobApplication(@PathVariable("jobApplicationId") int jobApplicationId,HttpSession session){
+		try{
+			User user=(User) session.getAttribute("loggedInUser");
+			JobApplication jobApplication=jobApplicationDao.getJobApplicationByJobApplicationId(jobApplicationId);
+			if((user.getUserRole().equals("ADMIN_USER"))&&(jobApplication!=null)){
+				jobApplication.setJobApplicationStatus("A");
+				jobApplicationDao.saveJobApplication(jobApplication);
+				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
+			}else{
+				 jobApplication=new JobApplication();
+				jobApplication.setErrorCode("4004");
+				jobApplication.setErrorMessage("not found");
+				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
+			}
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			JobApplication jobApplication=new JobApplication();
+			jobApplication.setErrorCode("4004");
+			jobApplication.setErrorMessage("admin not logged in");
+			return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
+		}
+	}
+	
+	@PutMapping(value="/rejectJobApplication/{jobApplicationId}")
+	public ResponseEntity<JobApplication>rejectJobApplication(@PathVariable("jobApplicationId") int jobApplicationId,HttpSession session){
+		try{
+			User user=(User) session.getAttribute("loggedInUser");
+			JobApplication jobApplication=jobApplicationDao.getJobApplicationByJobApplicationId(jobApplicationId);
+			if((user.getUserRole().equals("ADMIN_USER"))&&(jobApplication!=null)){
+				jobApplication.setJobApplicationStatus("R");
+				jobApplicationDao.saveJobApplication(jobApplication);
+				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
+			}else{
+				 jobApplication=new JobApplication();
+				jobApplication.setErrorCode("4004");
+				jobApplication.setErrorMessage("not found");
+				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
+			}
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			JobApplication jobApplication=new JobApplication();
+			jobApplication.setErrorCode("4004");
+			jobApplication.setErrorMessage("admin not logged in");
+			return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
+		}
 	}
 	
 	@GetMapping(value="/appliedJobs")

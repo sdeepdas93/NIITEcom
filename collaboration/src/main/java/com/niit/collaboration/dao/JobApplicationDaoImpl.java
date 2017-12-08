@@ -50,7 +50,22 @@ public class JobApplicationDaoImpl implements JobApplicationDao {
 		}
 	
 	}
-
+	
+	public boolean updateJobApplication(JobApplication jobApplication) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		try{
+			session.update(jobApplication);
+			session.flush();
+			session.close();
+			return true;
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return false;
+		}
+	
+	}
+	
 	public List<JobApplication> jobApplicationsByJobId(int jobId) {
 		// TODO Auto-generated method stub
 		Session session=getSession();
@@ -99,6 +114,25 @@ public class JobApplicationDaoImpl implements JobApplicationDao {
 			return false;
 		}
 		
+	}
+
+	public JobApplication getJobApplicationByJobApplicationId(int jobApplicationId) {
+		// TODO Auto-generated method stub
+		Session session=getSession();
+		
+		try{
+			Query query=session.createQuery("from JobApplication where jobApplicationId = ?");
+			query.setInteger(0, jobApplicationId);
+			
+			
+			return (JobApplication)query.uniqueResult();
+			
+		}catch(HibernateException e){
+			e.printStackTrace();
+			return null;
+		}
+		
+	
 	}
 
 }
