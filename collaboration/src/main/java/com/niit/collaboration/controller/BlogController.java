@@ -44,6 +44,8 @@ public class BlogController {
 		return new ResponseEntity<List<Blog>>(blogs, HttpStatus.OK);
 	}
 	
+	
+	
 	@PostMapping(value="/blog/")
 	public ResponseEntity<Blog> saveBlog(@RequestBody Blog blog,HttpSession session){
 		try{
@@ -63,7 +65,7 @@ public class BlogController {
 			
 		}
 		blog.setBlogDate(new Date(System.currentTimeMillis()));
-		blog.setBlogStatus("A");
+		blog.setBlogStatus("N");
 		blogDao.saveBlog(blog);
 		
 		return new ResponseEntity<Blog>(blog,HttpStatus.OK);
@@ -88,24 +90,89 @@ public class BlogController {
 	
 	
 	@PutMapping(value = "/likeBlog/{blogId}")
-	public ResponseEntity<Blog> likeBlog(@PathVariable("blogId") int blogId) {
-		Blog blog = blogDao.getBlogByBlogId(blogId);
-		if (blog == null) {
-			blog = new Blog();
-			
-			blog.setErrorMessage("No blog exist with id : " + blogId);
-
-			return new ResponseEntity<Blog>(blog, HttpStatus.NOT_FOUND);
+	public ResponseEntity<Blog> likeBlog(@PathVariable("blogId") int blogId,HttpSession session) {
+		try{
+			User user=(User) session.getAttribute("loggedInUser");
+			System.out.println(user.getUserName());
+			Blog blog = blogDao.getBlogByBlogId(blogId);
+			if (blog == null) {
+				blog = new Blog();
+				
+				blog.setErrorMessage("No blog exist with id : " + blogId);
+	
+				return new ResponseEntity<Blog>(blog, HttpStatus.NOT_FOUND);
 		}
 		
 		blog.setBlogCountLike(blog.getBlogCountLike()+1);
 		blogDao.updateBlog(blog);
 		return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			Blog blog=new Blog();
+			blog.setErrorMessage("not logged in");
+			blog.setErrorCode("404");
+			return new ResponseEntity<Blog>(blog, HttpStatus.NOT_FOUND);
+
+		}
+		
+		
+	}
+	//Blog accept and rejecet
+	
+	@PutMapping(value="/approveBlog/{blogId}")
+	ResponseEntity<Blog>approveBlog(@PathVariable("blogId") int blogId,HttpSession session)
+	{	
+		try{
+			Blog blog=blogDao.getBlogByBlogId(blogId);
+			if(((User)session.getAttribute("loggedInUser")).getUserRole().equals("ADMIN_USER")&&
+					(blog!=null)){
+						blog.setBlogStatus("A");
+						blogDao.updateBlog(blog);
+						return new ResponseEntity<Blog>(blog,HttpStatus.OK);
+					}else{
+						blog=new Blog();
+						blog.setErrorCode("404");
+						blog.setErrorMessage("blog not approved");
+						return new ResponseEntity<Blog>(blog,HttpStatus.NOT_FOUND);
+					}
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			Blog blog=new Blog();
+			blog.setErrorCode("404");
+			blog.setErrorMessage("admin not loggedin");
+			return new ResponseEntity<Blog>(blog,HttpStatus.NOT_FOUND);
+		}
 		
 		
 	}
 	
 	
+	@PutMapping(value="/rejectBlog/{blogId}")
+	ResponseEntity<Blog>rejectBlog(@PathVariable("blogId") int blogId,HttpSession session)
+	{	
+		try{
+			Blog blog=blogDao.getBlogByBlogId(blogId);
+			if(((User)session.getAttribute("loggedInUser")).getUserRole().equals("ADMIN_USER")&&
+					(blog!=null)){
+						blog.setBlogStatus("R");
+						blogDao.updateBlog(blog);
+						return new ResponseEntity<Blog>(blog,HttpStatus.OK);
+					}else{
+						blog=new Blog();
+						blog.setErrorCode("404");
+						blog.setErrorMessage("blog not rejected");
+						return new ResponseEntity<Blog>(blog,HttpStatus.NOT_FOUND);
+					}
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			Blog blog=new Blog();
+			blog.setErrorCode("404");
+			blog.setErrorMessage("admin not loggedin");
+			return new ResponseEntity<Blog>(blog,HttpStatus.NOT_FOUND);
+		}
+		
+		
+	}
 	
 	// BlogComment Section
 	
