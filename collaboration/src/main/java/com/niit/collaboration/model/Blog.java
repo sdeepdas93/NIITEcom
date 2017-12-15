@@ -27,7 +27,14 @@ public class Blog extends BaseDomain implements Serializable{
 	String userId;
 	String blogStatus;
 	int blogCountLike;
+	int blogCommentCount;
 	
+	public int getBlogCommentCount() {
+		return blogCommentCount;
+	}
+	public void setBlogCommentCount(int blogCommentCount) {
+		this.blogCommentCount = blogCommentCount;
+	}
 	public int getBlogId() {
 		return blogId;
 	}

@@ -210,7 +210,7 @@ public class UserController {
 	@GetMapping(value = "/user/logout")
 	public ResponseEntity<User> logout(HttpSession session) {
 		
-		
+		System.out.println("at user logout");
 	User user = (User) session.getAttribute("loggedInUser");
 		System.out.println("**********is user null"+(user==null)+"**********");
 		user.setUserIsOnline("OFFLINE");

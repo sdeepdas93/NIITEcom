@@ -25,6 +25,9 @@ public class Forum extends BaseDomain implements Serializable {
 	private Date forumCreationDate;
 	private String forumStatus;
 	private boolean forumEnable;
+	private String forumReason;
+	private int forumCountLike;
+	private int forumCountComment;
 	public int getForumId() {
 		return forumId;
 	}
@@ -66,6 +69,24 @@ public class Forum extends BaseDomain implements Serializable {
 	}
 	public void setForumEnable(boolean forumEnable) {
 		this.forumEnable = forumEnable;
+	}
+	public String getForumReason() {
+		return forumReason;
+	}
+	public void setForumReason(String forumReason) {
+		this.forumReason = forumReason;
+	}
+	public int getForumCountLike() {
+		return forumCountLike;
+	}
+	public void setForumCountLike(int forumCountLike) {
+		this.forumCountLike = forumCountLike;
+	}
+	public int getForumCountComment() {
+		return forumCountComment;
+	}
+	public void setForumCountComment(int forumCountComment) {
+		this.forumCountComment = forumCountComment;
 	}
 	
 	

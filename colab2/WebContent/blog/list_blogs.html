@@ -1,0 +1,59 @@
+<!-- all-blog-view -->
+<div>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+	<div class="container">
+	<div>
+	<div ng-show="currentUser.role=='ADMIN'">
+	<div class="col-md-4" ng-repeat="blog in ctrl.blogs"
+		ng-hide="blog.status=='R'">
+	<div>
+	<div>
+	<h3>{{blog.title}}</h3>
+	<p>Written By : {{blog.userId}}</p>
+	<div>
+<input type="button" class="btn btn-info" 						 ng-click="ctrl.rejectBlog(blog, blog.id)"
+	 ng-show="blog.status=='N'" value="Reject"> 
+<input type="button" class="btn btn-info"
+	ng-click="ctrl.getSelectedBlog(blog.id)" 
+      value="Know More..">
+<input type="button" class="btn btn-info"
+	ng-click="ctrl.approveBlog(blog, blog.id)"
+	ng-show="blog.status=='N'" value="Approve">
+	</div>
+	</div>
+	<div>
+	<h4><a><span><i class="fa fa-rss" aria-hidden="true"></i></span>{{blog.title}}</a></h4>
+<ul style="text-align: center;">
+<li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;{{blog.countLike}}</a></li>
+		</ul>
+		</div>
+		</div>
+		</div>
+		</div>
+<div ng-hide="currentUser.role=='ADMIN'">
+<div class="col-md-4 blogs-grid" ng-repeat="blog in ctrl.blogs"
+	ng-show="blog.status=='A'">
+<div>
+	<div>
+		<h3>{{blog.title}}</h3>
+		<p>Written By : {{blog.userId}}</p>
+	<div>
+	<input type="button" class="btn btn-info"
+		ng-click="ctrl.getSelectedBlog(blog.id)"
+           value="Know More..">
+	</div>
+		</div>
+	<div>
+		<h4><a><span></span>{{blog.title}}</a>
+		</h4>
+		<ul style="text-align: center;">
+		<li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;{{blog.countLike}}</a></li>
+		</ul>
+	</div>
+	</div>
+	</div>
+	</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>

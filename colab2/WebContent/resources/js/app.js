@@ -9,7 +9,7 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 	 */
 	.when('/', {							//when(path, route) where path is string type and route is object type
 		templateUrl : 'home/home.html',			//'templateUrl' is used to specify the path of the view file that will load 
-		//controller : 'HomeController as ctrl'		//'controller' is used to specify the particular controller for this 'path' or view.
+		controller : 'HomeController as ctrl'		//'controller' is used to specify the particular controller for this 'path' or view.
 	})
 
 		
@@ -54,6 +54,13 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 		templateUrl : 'user/register.html',
 		controller : 'UserController as ctrl'
 	})
+	
+	/*blog edited on 12/07/2017*/
+.when('/blogs', {
+		templateUrl : 'blog/bloglist.html',
+		controller : 'BlogController as ctrl'
+	})
+	
 	/**
 	 * If anything goes wrong then this mapping will handle the request...
 	 */

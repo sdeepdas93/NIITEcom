@@ -188,10 +188,11 @@ public class ForumController {
 		@PostMapping(value="/forumComment/")
 		public ResponseEntity<ForumComment> saveBlogComment(@RequestBody ForumComment forumComment,HttpSession session){
 			User user=(User) session.getAttribute("loggedInUser");
+			Forum forum=forumDao.getForumByForumId(forumComment.getForumId());
 			try{
 			//checking if the user doesnt exist or the blog doesnt exist
-				if((!(user.getUserId().equals(forumComment.getUserId())))||
-					(forumDao.getForumByForumId(forumComment.getForumId()))==null)	
+				if((user==null)||
+					(forum==null))	
 						{
 							forumComment.setErrorCode("404");
 							forumComment.setErrorMessage("forumcomment Not Created");
@@ -208,6 +209,8 @@ public class ForumController {
 			
 			forumComment.setForumCommentDate(forumCommentDate);
 			forumCommentDao.saveForumComment(forumComment);
+			forum.setForumCountComment(forum.getForumCountComment()+1);
+			forumDao.updateForum(forum);
 			return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
 			
 		}

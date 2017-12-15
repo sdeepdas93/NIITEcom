@@ -1,5 +1,7 @@
 package com.niit.collaboration.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +37,13 @@ public class BlogController {
 	//Blog Section
 	@GetMapping(value = "/blogs")
 	public ResponseEntity<List<Blog>> listBlogs() {
-
+		System.out.println("at blog list");
 		List<Blog> blogs = blogDao.getAllBlogs();
 		if (blogs.isEmpty()) {
 			return new ResponseEntity<List<Blog>>(HttpStatus.NO_CONTENT);
 		}
-
+		//ArrayList<Blog> reverseBlogList=(ArrayList<Blog>) blogs;
+		Collections.reverse(blogs);
 		return new ResponseEntity<List<Blog>>(blogs, HttpStatus.OK);
 	}
 	
@@ -48,27 +51,31 @@ public class BlogController {
 	
 	@PostMapping(value="/blog/")
 	public ResponseEntity<Blog> saveBlog(@RequestBody Blog blog,HttpSession session){
+		System.out.println("at create blog");
 		try{
 		User user=(User) session.getAttribute("loggedInUser");
 		
-		if((!(blog.getUserId().equals(user.getUserId()))||
-			(blogDao.getBlogByBlogId(blog.getBlogId())!=null))){
+		if((user==null)||
+			(blogDao.getBlogByBlogId(blog.getBlogId())!=null)){
 			
 			blog.setErrorCode("404");
 			blog.setErrorMessage("BlogComment Not Created");
 			return new ResponseEntity<Blog>(blog,HttpStatus.OK);
 				}
+		
+		blog.setBlogDate(new Date(System.currentTimeMillis()));
+		blog.setBlogStatus("N");
+		blog.setBlogCommentCount(0);
+		blog.setUserId(user.getUserId());
+		blogDao.saveBlog(blog);
+		
+		return new ResponseEntity<Blog>(blog,HttpStatus.OK);
 		}catch(NullPointerException e){
 			blog.setErrorCode("404");
 			blog.setErrorMessage("User Not logged in");
 			return new ResponseEntity<Blog>(blog,HttpStatus.OK);
 			
 		}
-		blog.setBlogDate(new Date(System.currentTimeMillis()));
-		blog.setBlogStatus("N");
-		blogDao.saveBlog(blog);
-		
-		return new ResponseEntity<Blog>(blog,HttpStatus.OK);
 		}
 	
 	
@@ -196,8 +203,10 @@ public class BlogController {
 		User user=(User) session.getAttribute("loggedInUser");
 		
 		//checking if the user doesnt exist or the blog doesnt exist
-		if((!(user.getUserId().equals(blogComment.getUserId())))||
-			(blogDao.getBlogByBlogId(blogComment.getBlogId())==null)	
+		Blog blog=blogDao.getBlogByBlogId(blogComment.getBlogId());
+		
+		if((user==null)||
+			(blog==null)	
 				){
 			blogComment.setErrorCode("404");
 			blogComment.setErrorMessage("BlogComment Not Created");
@@ -207,6 +216,8 @@ public class BlogController {
 		
 		blogComment.setBlogCommentDate(blogCommentDate);
 		blogCommentDao.saveBlogComment(blogComment);
+		blog.setBlogCommentCount(blog.getBlogCommentCount()+1);
+		blogDao.updateBlog(blog);
 		return new ResponseEntity<BlogComment>(blogComment,HttpStatus.OK);
 		
 	}

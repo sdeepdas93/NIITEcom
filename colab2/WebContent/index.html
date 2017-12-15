@@ -17,13 +17,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <body class="w3-theme-l5" background="resources/images/background.jpg">
 
 <!-- Navbar -->
-<div class="w3-top">
+<div class="w3-top" ng-controller="UserController as ctrl">
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>NIIT COLAB</a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
+  
+  <a href="#/blogs" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Blogs"><i class="fa fa-rss"></i></a>
   <div class="w3-dropdown-hover w3-hide-small">
     <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>     
     <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
@@ -35,7 +37,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account"><img src="/w3images/avatar2.png" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a>
     <a href="#/login" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="login"><i class="fa fa-sign-in"></i></a>
  	<a href="#/register" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="register"><i class="fa fa-user-plus"></i></a>
- 	
+ 	<button ng-click="ctrl.logout()"class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="logout"><i class="fa fa-sign-out"></i></button>
  </div>
 </div>
 
@@ -100,10 +102,16 @@ function openNav() {
 
 	<!-- modulewise custom javascript -->
 	<script src="resources/js/app.js"></script>
+	<!-- Home related js files -->
+	<script src="home/HomeController.js"></script>
 	
 	<!-- user related js files -->
 	<script src="user/UserController.js"></script>
 	<script src="user/UserService.js"></script>
+	
+	<script src="blog/BlogController.js"></script>
+	<script src="blog/BlogService.js"></script>
+	
 
 </body>
 </html> 

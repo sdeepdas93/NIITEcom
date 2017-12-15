@@ -141,18 +141,18 @@ public class JobController {
 			JobApplication jobApplication=jobApplicationDao.getJobApplicationByJobApplicationId(jobApplicationId);
 			if((user.getUserRole().equals("ADMIN_USER"))&&(jobApplication!=null)){
 				jobApplication.setJobApplicationStatus("A");
-				jobApplicationDao.saveJobApplication(jobApplication);
+				jobApplicationDao.updateJobApplication(jobApplication);
 				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
 			}else{
 				 jobApplication=new JobApplication();
-				jobApplication.setErrorCode("4004");
+				jobApplication.setErrorCode("404");
 				jobApplication.setErrorMessage("not found");
 				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
 			}
 		}catch(NullPointerException e){
 			e.printStackTrace();
 			JobApplication jobApplication=new JobApplication();
-			jobApplication.setErrorCode("4004");
+			jobApplication.setErrorCode("404");
 			jobApplication.setErrorMessage("admin not logged in");
 			return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
 		}
@@ -165,18 +165,18 @@ public class JobController {
 			JobApplication jobApplication=jobApplicationDao.getJobApplicationByJobApplicationId(jobApplicationId);
 			if((user.getUserRole().equals("ADMIN_USER"))&&(jobApplication!=null)){
 				jobApplication.setJobApplicationStatus("R");
-				jobApplicationDao.saveJobApplication(jobApplication);
+				jobApplicationDao.updateJobApplication(jobApplication);
 				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
 			}else{
 				 jobApplication=new JobApplication();
-				jobApplication.setErrorCode("4004");
+				jobApplication.setErrorCode("404");
 				jobApplication.setErrorMessage("not found");
 				return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
 			}
 		}catch(NullPointerException e){
 			e.printStackTrace();
 			JobApplication jobApplication=new JobApplication();
-			jobApplication.setErrorCode("4004");
+			jobApplication.setErrorCode("404");
 			jobApplication.setErrorMessage("admin not logged in");
 			return new ResponseEntity<JobApplication>(jobApplication,HttpStatus.OK);
 		}
