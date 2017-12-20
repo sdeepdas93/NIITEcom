@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.collaboration.dao.BlogCommentDao;
 import com.niit.collaboration.dao.BlogDao;
+import com.niit.collaboration.dao.BlogLikeDao;
 import com.niit.collaboration.dao.UserDao;
 import com.niit.collaboration.model.Blog;
 import com.niit.collaboration.model.BlogComment;
+import com.niit.collaboration.model.BlogLike;
 import com.niit.collaboration.model.User;
 
 
@@ -34,13 +36,15 @@ public class BlogController {
 	BlogCommentDao blogCommentDao;
 	@Autowired
 	UserDao userDao;
+	@Autowired
+	BlogLikeDao blogLikeDao;
 	//Blog Section
 	@GetMapping(value = "/blogs")
 	public ResponseEntity<List<Blog>> listBlogs() {
 		System.out.println("at blog list");
 		List<Blog> blogs = blogDao.getAllBlogs();
 		if (blogs.isEmpty()) {
-			return new ResponseEntity<List<Blog>>(HttpStatus.NO_CONTENT);
+			
 		}
 		//ArrayList<Blog> reverseBlogList=(ArrayList<Blog>) blogs;
 		Collections.reverse(blogs);
@@ -82,7 +86,7 @@ public class BlogController {
 	
 	@GetMapping(value = "/blog/{blogId}")
 	public ResponseEntity<Blog> getBlog(@PathVariable("blogId") int blogId) {
-
+		System.out.println("at get blog");
 		Blog blog = blogDao.getBlogByBlogId(blogId);
 		if (blog == null) {
 			blog = new Blog();
@@ -108,11 +112,20 @@ public class BlogController {
 				blog.setErrorMessage("No blog exist with id : " + blogId);
 	
 				return new ResponseEntity<Blog>(blog, HttpStatus.NOT_FOUND);
+		}else if(blogLikeDao.isExist(blogId, user.getUserId())){
+			blog = new Blog();
+			
+			blog.setErrorMessage("User has already liked the blog: " + blogId);
+
+			return new ResponseEntity<Blog>(blog, HttpStatus.NOT_FOUND);
 		}
 		
-		blog.setBlogCountLike(blog.getBlogCountLike()+1);
-		blogDao.updateBlog(blog);
-		return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+			blog.setBlogCountLike(blog.getBlogCountLike()+1);
+			blogDao.updateBlog(blog);
+			BlogLike blogLike=new BlogLike();
+			blogLike.setBlogId(blogId);blogLike.setUserId(user.getUserId());blogLike.setUserName(user.getUserName());
+			blogLikeDao.saveBlogLike(blogLike);
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
 		}catch(NullPointerException e){
 			e.printStackTrace();
 			Blog blog=new Blog();
@@ -124,6 +137,18 @@ public class BlogController {
 		
 		
 	}
+	
+	@GetMapping(value = "/likeBlog/{blogId}")
+	public ResponseEntity<List<BlogLike>> getBlogLikesByblogId(@PathVariable("blogId") int blogId,HttpSession session) {
+		Blog blog = blogDao.getBlogByBlogId(blogId);
+		if (blog == null) {
+			return new ResponseEntity<List<BlogLike>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<BlogLike>>(blogLikeDao.getBlogLikesByBlogId(blogId), HttpStatus.OK);
+		
+	}
+	
+	
 	//Blog accept and rejecet
 	
 	@PutMapping(value="/approveBlog/{blogId}")

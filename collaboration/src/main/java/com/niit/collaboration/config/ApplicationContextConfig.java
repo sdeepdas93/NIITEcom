@@ -67,6 +67,8 @@ public class ApplicationContextConfig {
 		sessionBuilder.addAnnotatedClass(Job.class);
 		sessionBuilder.addAnnotatedClass(JobApplication.class);
 		sessionBuilder.addAnnotatedClass(FriendList.class);
+		sessionBuilder.addAnnotatedClass(BlogLike.class);
+		sessionBuilder.addAnnotatedClass(ForumJoining.class);
 		/*sessionBuilder.addAnnotatedClass(Event.class);	
 		sessionBuilder.addAnnotatedClass(FriendList.class);	
 				

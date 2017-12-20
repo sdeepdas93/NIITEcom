@@ -1,5 +1,6 @@
 package com.niit.collaboration.controller;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class ForumController {
 			return new ResponseEntity<List<Forum>>(HttpStatus.NO_CONTENT);
 		}
 		
-
+		Collections.reverse(forums);
 		return new ResponseEntity<List<Forum>>(forums, HttpStatus.OK);
 		}catch(NullPointerException e){
 			System.out.println("user not logged in");
