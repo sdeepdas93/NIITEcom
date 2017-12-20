@@ -1,11 +1,13 @@
 package com.niit.collaboration.model;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
@@ -26,8 +28,11 @@ public class Forum extends BaseDomain implements Serializable {
 	private String forumStatus;
 	private boolean forumEnable;
 	private String forumReason;
-	private int forumCountLike;
 	private int forumCountComment;
+	private int forumUserCouont;
+	@Transient
+	private String forumJoiningStatus;
+	
 	public int getForumId() {
 		return forumId;
 	}
@@ -87,6 +92,18 @@ public class Forum extends BaseDomain implements Serializable {
 	}
 	public void setForumCountComment(int forumCountComment) {
 		this.forumCountComment = forumCountComment;
+	}
+	public int getForumUserCouont() {
+		return forumUserCouont;
+	}
+	public void setForumUserCouont(int forumUserCouont) {
+		this.forumUserCouont = forumUserCouont;
+	}
+	public String getForumJoiningStatus() {
+		return forumJoiningStatus;
+	}
+	public void setForumJoiningStatus(String forumJoiningStatus) {
+		this.forumJoiningStatus = forumJoiningStatus;
 	}
 	
 	

@@ -27,7 +27,19 @@ app.controller('BlogController', [
 			
 			
 			 
-			
+		 self.blogComment = 
+		    {
+		    		blogCommentId : '',
+		    		blogId : '',
+		    		userId : '',
+		    		userName : '',
+		    		blogComment : '',
+		    		blogCommentDate:'',
+					errorCode : '',
+					errorMessage : ''
+			}		
+		    
+		    self.blogComments = [];
 			
 			
 			self.getSelectedBlog = function(id) {
@@ -35,12 +47,60 @@ app.controller('BlogController', [
 				BlogService.getSelectedBlog(id).then(
 						function(d) {
 							self.blog = d;
-							$location.path('/blogs');
+							$location.path('/viewBlog');
 						}, 
 						function(errResponse) {
 							console.error('Error while fetching Blog...');
 						});
 			};
+			
+			self.likeSelectedBlog = function(blog, id) {
+				console.log("-->BlogController : calling likeBlog() method : Blog id is : "+id);
+				console.log("-->BlogController", self.blog);
+				
+				BlogService.likeBlog(blog, id).then(
+						function()
+						{self.getSelectedBlog(id),
+							self.fetchAllBlogs(),
+							$location.path('/viewBlog')},
+						
+						function(errResponse) {
+							console.error("Error while liking the blog...")
+						});
+				
+				
+			};
+			
+			/***
+			 */
+			
+			self.approveSelectedBlog = function(blog, id) {
+				console.log("-->BlogController : calling approveBlog() method : getting blog with id : " + id);
+				console.log("-->BlogController",self.blog);
+				BlogService.approveBlog(blog, id).then(
+						function(){
+						self.getSelectedBlog(id),
+						self.fetchAllBlogs(),
+						$location.path('/viewBlog')},
+						function(errResponse) {
+							console.error("Error while approving blog...")
+						});
+			};
+
+			self.rejectSelectedBlog = function(blog, id) {
+				console.log("-->BlogController : calling rejectBlog() method : getting blog with id : " + id);
+				console.log("-->BlogController",self.blog);
+				BlogService.rejectBlog(blog, id).then(
+						function(){
+						self.getSelectedBlog(id),
+						self.fetchAllBlogs(),
+						$location.path('/viewBlog')},
+						function(errResponse) {
+							console.error("Error while rejecting blog...")
+						});
+			};
+			
+			/**/
 
 			self.fetchAllBlogs = function() {
 				console.log("--> BlogController : calling fetchAllBlogs method.");
@@ -174,4 +234,62 @@ app.controller('BlogController', [
 				
 				$scope.myForm.$setPristine(); // reset form...
 			};
+			//comment section
+			self.fetchAllBlogComments = function(id)
+			{
+				console.log("-->BlogController : calling fetchAllBlogComments method with id : "+ id);
+				BlogService.fetchAllBlogComments(id).then
+				(function(d) 
+				{
+					self.blogComments = d;
+					self.getSelectedBlog(id);		//calling getSelectedBlog(id) method ...
+					$location.path('/view_blog');
+				},
+				function(errResponse) 
+				{
+					console.error('Error while fetching BlogComments...');
+				}
+				);
+			};
+			
+			
+			
+			self.createBlogComment = function(blogComment, id) {
+				console.log("-->BlogController : calling 'createBlogComment' method.", self.blog);
+				blogComment.blogId = id;
+				console.log("-->BlogController BlogId :" +blogComment.blogId);
+				BlogService.createBlogComment(blogComment).then
+							(function(d) 
+							{
+								console.log('Current User :',$rootScope.currentUser.userId)
+								self.blogComment = d;
+								console.log('-->BlogController :', self.blogComment)
+								self.fetchAllBlogComments(id);
+								self.resetComment();
+							},
+							function(errResponse) {
+								console.error('Error while creating blogComment...');
+							}
+							);
+			};
+			
+			
+			
+			
+			self.resetComment = function() 
+			{
+				console.log('submit a new BlogComment', self.blogComment);
+				self.blogComment = {
+						blogCommentId : '',
+			    		blogId : '',
+			    		userId : '',
+			    		userName : '',
+			    		blogComment : '',
+			    		blogCommentDate:'',
+						errorCode : '',
+						errorMessage : ''
+					};
+				$scope.myForm.$setPristine(); // reset blogComment form...
+			};
+			
 		} ]);

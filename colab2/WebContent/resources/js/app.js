@@ -26,19 +26,13 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 		controller : 'ForumController as ctrl'
 	})
 
-	.when('/list_blog', {
-		templateUrl : 'b_blog/list_blogs.html',
-		controller : 'BlogController as ctrl'
-	})
+	
 	
 .when('/list_forums', {
 		templateUrl : 'b_forum/list_forums.html',
 		controller : 'ForumController as ctrl'
 	})
-	.when('/view_blog', {
-		templateUrl : 'b_blog/view_blog.html',
-		controller : 'BlogController as ctrl'
-	})
+	
 .when('/view_forum', {
 		templateUrl : 'b_forum/view_forum.html',
 		controller : 'ForumController as ctrl'
@@ -60,6 +54,11 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 		templateUrl : 'blog/bloglist.html',
 		controller : 'BlogController as ctrl'
 	})
+	
+.when('/viewBlog', {
+		templateUrl : 'blog/viewBlog.html',
+		controller : 'BlogController as ctrl'
+	})	
 	
 	/**
 	 * If anything goes wrong then this mapping will handle the request...
