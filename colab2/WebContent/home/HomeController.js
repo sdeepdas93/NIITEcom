@@ -3,8 +3,9 @@
 app.controller('HomeController', [ 
         '$scope', 
         '$location',
-		'$rootScope', 
-		function($scope, $location, $rootScope) {
+		'$rootScope',
+		'$localStorage',
+		function($scope, $location, $rootScope, $localStorage) {
 
         	console.log("HomeController...");
         	var self = this;
@@ -15,8 +16,9 @@ app.controller('HomeController', [
 				if(!$rootScope.currentUser) {
 					console.log("Usernot logged in");
 					$rootScope.currentUser="";
+					$localStorage.currentUser=$rootScope.currentUser;
 				}
-				return $rootScope.currentUser;
+				return $localStorage.currentUser;
 			}
         	self.getCurrentUser();
         	

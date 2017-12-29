@@ -57,6 +57,8 @@ public class BlogCommentDaoImpl implements BlogCommentDao {
 		Session session=getSession();
 		try{
 			session.save(blogComment);
+			session.flush();
+			session.close();
 			return true;
 		}catch(HibernateException e){
 			e.printStackTrace();

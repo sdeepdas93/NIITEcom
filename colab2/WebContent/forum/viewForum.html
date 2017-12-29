@@ -104,23 +104,23 @@
       
       <div class="w3-container w3-card w3-white w3-round w3-margin"   ><br>
         <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">{{selectedBlog.blogDate|date}}</span>
-        <h4>{{selectedBlog.userId}}</h4><br>
+        <span class="w3-right w3-opacity">{{selectedforum.forumCreationDate|date}}</span>
+        <h4>{{selectedForum.userId}}</h4><br>
         <hr class="w3-clear">
-        <h4>{{selectedBlog.blogTitle}}**</h4>
-        <p>{{selectedBlog.blogContent}}</p>
-        <a ng-show="selectedBlog.blogStatus!='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.approveSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-check"></i> Approve</button> </a>
+        <h4>{{selectedForum.forumName}}</h4>
+        <p>{{selectedForum.forumDescription}}</p>
+         <a ng-show="selectedBlog.blogStatus!='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.approveSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-check"></i> Approve</button> </a>
         <a ng-show="selectedBlog.blogStatus=='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.rejectSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-close"></i> Reject</button> </a>
         <a href=""><button type="button" ng-click="ctrl.likeSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> {{selectedBlog.blogCountLike}}Like</button> </a>
         <br>
         
-        <form name="myForm" ng-show="selectedBlog.blogStatus=='A' && (currentUser.userRole=='ADMIN_USER' || currentUser.userRole=='USER')">
-		<textarea type="text" class="form-control" required placeholder="Write your comment here..." ng-model="ctrl.blogComment.blogComment" ></textarea>
+        <form name="myForm" ng-show="selectedForum.forumStatus=='A' && (currentUser.userRole=='ADMIN_USER' || currentUser.userRole=='USER')">
+		<textarea type="text" class="form-control" required placeholder="Write your comment here..." ng-model="ctrl.forumComment.forumComment" ></textarea>
 		
 		<br>
 		
-		<a href=""><button ng-show="selectedBlog.blogStatus=='A' && currentUser.userRole=='ADMIN_USER' || currentUser.userRole=='USER'" type="button" ng-click="ctrl.createBlogComment(ctrl.blogComment, selectedBlog.blogId);"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-comments-o"></i> Comment</button> </a>
-		</form>
+		<a href=""><button  type="button" ng-click="ctrl.createForumComment(ctrl.forumComment, selectedForum.forumId);"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-comments-o"></i> Comment</button> </a>
+		</form> 
         
         
         
@@ -135,12 +135,12 @@
       
       
       
-       <div class="w3-container w3-card w3-white w3-round w3-margin"  ng-repeat="blogComment in selectedBlogComments"> <br>
+       <div class="w3-container w3-card w3-white w3-round w3-margin"  ng-repeat="forumComment in selectedForumComments"> <br>
         <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">{{blogComment.blogCommentDate|date}}</span>
-        <h4>{{blogComment.userName}}</h4><br>
+        <span class="w3-right w3-opacity">{{forumComment.forumCommentDate|date}}</span>
+        <h4>{{forumComment.userName}}</h4><br>
         <hr class="w3-clear">
-        <p>{{blogComment.blogComment}}</p>
+        <p>{{forumComment.forumComment}}</p>
         
          
       </div> 

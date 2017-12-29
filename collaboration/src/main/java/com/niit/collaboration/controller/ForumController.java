@@ -75,38 +75,42 @@ public class ForumController {
 	@PostMapping(value="/forum/")
 	public ResponseEntity<Forum> saveForum(@RequestBody Forum forum,HttpSession session){
 		try{
-		User user=(User) session.getAttribute("loggedInUser");
-		
-		if((!(forum.getForumCreaterId().equals(user.getUserId()))||
-			(forumDao.getForumByForumId(forum.getForumId())!=null))){
+			User user=(User) session.getAttribute("loggedInUser");
 			
-			forum.setErrorCode("404");
-			forum.setErrorMessage("Forum Not Created");
-			return new ResponseEntity<Forum>(forum,HttpStatus.OK);
+			if((user==null)||
+				(forumDao.getForumByForumId(forum.getForumId())!=null)){
+				
+				forum.setErrorCode("404");
+				forum.setErrorMessage("Forum Not Created");
+				return new ResponseEntity<Forum>(forum,HttpStatus.OK);
 				}
+		
+			forum.setForumCreationDate(new Date(System.currentTimeMillis()));
+			forum.setForumStatus("N");
+			forum.setUserId(user.getUserId());
+			forum.setUserName(user.getUserName());
+			forumDao.saveForum(forum);
+		
+		
+			return new ResponseEntity<Forum>(forum,HttpStatus.OK);
 		}catch(NullPointerException e){
 			forum.setErrorCode("404");
 			forum.setErrorMessage("User Not logged in");
 			return new ResponseEntity<Forum>(forum,HttpStatus.OK);
 			
 		}
-		forum.setForumCreationDate(new Date(System.currentTimeMillis()));
-		forum.setForumStatus("N");
-		forumDao.saveForum(forum);
-		
-		
-		return new ResponseEntity<Forum>(forum,HttpStatus.OK);
 		}
 	//approve and reject foroum
 	@PutMapping(value="/approveForum/{forumId}")
-	ResponseEntity<Forum> approveForum(@PathVariable("foroumId") int forumId,HttpSession session)
-	{	
+	ResponseEntity<Forum> approveForum(@PathVariable("forumId") int forumId,HttpSession session)
+	{	System.out.println("at approve forum");
 		try{
 			Forum forum=forumDao.getForumByForumId(forumId);
 			if(((User)session.getAttribute("loggedInUser")).getUserRole().equals("ADMIN_USER")&&
 					(forum!=null)){
 				forum.setForumStatus("A");
 				forumDao.updateForum(forum);
+				System.out.println("forum updated successfully");
 						return new ResponseEntity<Forum>(forum,HttpStatus.OK);
 					}else{
 						forum=new Forum();
@@ -126,8 +130,8 @@ public class ForumController {
 	}
 	
 	
-	@PutMapping(value="/rejecteForum/{forumId}")
-	ResponseEntity<Forum> rejecteForum(@PathVariable("foroumId") int forumId,HttpSession session)
+	@PutMapping(value="/rejectForum/{forumId}")
+	ResponseEntity<Forum> rejectForum(@PathVariable("forumId") int forumId,HttpSession session)
 	{	
 		try{
 			Forum forum=forumDao.getForumByForumId(forumId);
@@ -198,19 +202,30 @@ public class ForumController {
 			
 		}
 		
-		@PostMapping(value="/forumComment/")
-		public ResponseEntity<ForumComment> saveBlogComment(@RequestBody ForumComment forumComment,HttpSession session){
+		@PostMapping(value="/forumComment/{forumId}")
+		public ResponseEntity<ForumComment> saveForumComment(@PathVariable("forumId") int forumId, @RequestBody ForumComment forumComment,HttpSession session){
 			User user=(User) session.getAttribute("loggedInUser");
-			Forum forum=forumDao.getForumByForumId(forumComment.getForumId());
+			Forum forum=forumDao.getForumByForumId(forumId);
 			try{
 			//checking if the user doesnt exist or the blog doesnt exist
-				if((user==null)||
-					(forum==null))	
-						{
-							forumComment.setErrorCode("404");
-							forumComment.setErrorMessage("forumcomment Not Created");
-							return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
-				}
+					if((user==null)||
+						(forum==null))	
+							{
+								forumComment.setErrorCode("404");
+								forumComment.setErrorMessage("forumcomment Not Created");
+								return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
+					}
+				
+				Date forumCommentDate=new Date(System.currentTimeMillis());
+				
+				forumComment.setForumCommentDate(forumCommentDate);
+				forumComment.setForumId(forumId);
+				forumComment.setUserId(user.getUserId());
+				forumComment.setUserName(user.getUserName());
+				forumCommentDao.saveForumComment(forumComment);
+				forum.setForumCountComment(forum.getForumCountComment()+1);
+				forumDao.updateForum(forum);
+				return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
 			}catch(NullPointerException e){
 				e.printStackTrace();
 				forumComment.setErrorCode("404");
@@ -218,13 +233,6 @@ public class ForumController {
 				return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
 				
 			}
-			Date forumCommentDate=new Date(System.currentTimeMillis());
-			
-			forumComment.setForumCommentDate(forumCommentDate);
-			forumCommentDao.saveForumComment(forumComment);
-			forum.setForumCountComment(forum.getForumCountComment()+1);
-			forumDao.updateForum(forum);
-			return new ResponseEntity<ForumComment>(forumComment,HttpStatus.OK);
 			
 		}
 		
@@ -244,7 +252,7 @@ public class ForumController {
 					return new ResponseEntity<ForumJoining>(forumJoining,HttpStatus.NOT_FOUND);
 				}else{
 					Forum forum= forumDao.getForumByForumId(forumId);
-					forum.setForumUserCouont(forum.getForumUserCouont()+1);
+					forum.setForumUserCount(forum.getForumUserCount()+1);
 					forumDao.saveForum(forum);
 					forumJoining.setUserId(userId);forumJoining.setForumId(forumId);
 					forumJoiningDao.saveForumJoining(forumJoining);

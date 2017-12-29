@@ -5,7 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.stereotype.Component;
 
@@ -18,9 +20,10 @@ public class Blog extends BaseDomain implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
+	
+	@SequenceGenerator(name="SEQ_GEN", sequenceName="SEQ_AUTO_BLOG_ID", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN")
 	int blogId;
-	String blogReason;
 	String blogContent;
 	String blogTitle;
 	Date blogDate;
@@ -41,12 +44,7 @@ public class Blog extends BaseDomain implements Serializable{
 	public void setBlogId(int blogId) {
 		this.blogId = blogId;
 	}
-	public String getBlogReason() {
-		return blogReason;
-	}
-	public void setBlogReason(String blogReason) {
-		this.blogReason = blogReason;
-	}
+	
 	public String getBlogContent() {
 		return blogContent;
 	}

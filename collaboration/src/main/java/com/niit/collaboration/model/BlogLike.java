@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.stereotype.Component;
 
@@ -16,7 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BlogLike  extends BaseDomain implements Serializable {
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="SEQ_GEN", sequenceName="SEQ_AUTO_BLOGLIKE_ID", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN")
 	private int blogLikeId;
 	private String userId;
 	private int blogId;

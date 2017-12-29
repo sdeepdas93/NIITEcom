@@ -60,6 +60,8 @@ public class ForumCommentDaoImpl implements ForumCommentDao {
 		Session session=getSession();
 		try{
 			session.save(forumComment);
+			session.flush();
+			session.close();
 			return true;
 		}catch(HibernateException e){
 			e.printStackTrace();

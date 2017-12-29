@@ -45,8 +45,11 @@ app.controller('BlogController', [
 			self.getSelectedBlog = function(id) {
 				console.log("-->BlogController : calling getSelectedBlog method : getting blog with id : " + id);
 				BlogService.getSelectedBlog(id).then(
+						
 						function(d) {
 							self.blog = d;
+							
+							self.fetchAllBlogComments(id);
 							$location.path('/viewBlog');
 						}, 
 						function(errResponse) {
@@ -79,8 +82,8 @@ app.controller('BlogController', [
 				console.log("-->BlogController",self.blog);
 				BlogService.approveBlog(blog, id).then(
 						function(){
-						self.getSelectedBlog(id),
-						self.fetchAllBlogs(),
+						self.getSelectedBlog(id);
+						self.fetchAllBlogs();
 						$location.path('/viewBlog')},
 						function(errResponse) {
 							console.error("Error while approving blog...")
@@ -94,6 +97,7 @@ app.controller('BlogController', [
 						function(){
 						self.getSelectedBlog(id),
 						self.fetchAllBlogs(),
+						
 						$location.path('/viewBlog')},
 						function(errResponse) {
 							console.error("Error while rejecting blog...")
@@ -242,8 +246,8 @@ app.controller('BlogController', [
 				(function(d) 
 				{
 					self.blogComments = d;
-					self.getSelectedBlog(id);		//calling getSelectedBlog(id) method ...
-					$location.path('/view_blog');
+						//calling getSelectedBlog(id) method ...
+					
 				},
 				function(errResponse) 
 				{
@@ -265,7 +269,7 @@ app.controller('BlogController', [
 								self.blogComment = d;
 								console.log('-->BlogController :', self.blogComment)
 								self.fetchAllBlogComments(id);
-								self.resetComment();
+								self.resetBlogComment();
 							},
 							function(errResponse) {
 								console.error('Error while creating blogComment...');
@@ -276,7 +280,7 @@ app.controller('BlogController', [
 			
 			
 			
-			self.resetComment = function() 
+			self.resetBlogComment = function() 
 			{
 				console.log('submit a new BlogComment', self.blogComment);
 				self.blogComment = {

@@ -44,7 +44,7 @@ public class BlogController {
 		System.out.println("at blog list");
 		List<Blog> blogs = blogDao.getAllBlogs();
 		if (blogs.isEmpty()) {
-			
+			return new ResponseEntity<List<Blog>>(HttpStatus.NO_CONTENT);
 		}
 		//ArrayList<Blog> reverseBlogList=(ArrayList<Blog>) blogs;
 		Collections.reverse(blogs);
@@ -212,7 +212,7 @@ public class BlogController {
 	@GetMapping(value="/blogComments/{blogId}")
 	public ResponseEntity<List<BlogComment>> getBlogComments(@PathVariable("blogId") int blogId,HttpSession session){
 		
-		
+		System.out.println("at get blog comments");
 		
 		
 		List<BlogComment> blogComments= blogCommentDao.getBlogCommentsByBlogId(blogId);
@@ -225,6 +225,7 @@ public class BlogController {
 	
 	@PostMapping(value="/blogComment/")
 	public ResponseEntity<BlogComment> saveBlogComment(@RequestBody BlogComment blogComment,HttpSession session){
+		System.out.println("at save blogcomment");
 		User user=(User) session.getAttribute("loggedInUser");
 		
 		//checking if the user doesnt exist or the blog doesnt exist
@@ -240,7 +241,11 @@ public class BlogController {
 		Date blogCommentDate=new Date(System.currentTimeMillis());
 		
 		blogComment.setBlogCommentDate(blogCommentDate);
+		
+		blogComment.setUserId(user.getUserId());
+		blogComment.setUserName(user.getUserName());
 		blogCommentDao.saveBlogComment(blogComment);
+		
 		blog.setBlogCommentCount(blog.getBlogCommentCount()+1);
 		blogDao.updateBlog(blog);
 		return new ResponseEntity<BlogComment>(blogComment,HttpStatus.OK);

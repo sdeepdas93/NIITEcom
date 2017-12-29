@@ -5,11 +5,10 @@
       <!-- Profile -->
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
-         
          <h4 class="w3-center">{{currentUser.userName}}</h4>
          <p class="w3-center"><img src="/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
-         <p>{{currentUser.userDescription}}</p>
+         <p>{{currentUser.user.userDescription}}</p>
          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
@@ -92,58 +91,60 @@
     <!-- Middle Column -->
     <div class="w3-col m7">
     
+      <div class="w3-row-padding"  ng-show="currentUser.userRole=='USER' || currentUser.userRole=='ADMIN_USER'">
+        <div class="w3-col m12">
+          <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+            	<form ng-submit="ctrl.submit()" name="myForm" >
+              <h6 class="w3-opacity">Create forum.</h6>
+              <input type="text" name="title" required pattern=".{1,25}"
+				placeholder="Title of the Blog" ng-model="ctrl.forum.forumName" class="form-control">
+				<br>
+				<textarea class="form-control" name="content" 
+				placeholder="Content ..." ng-model="ctrl.forum.forumDescription" ></textarea>
+				<br>
+              
+              <button type="submit" class="w3-button w3-theme" ><i class="fa fa-pencil"></i>Create Forum </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       
       
       
       
       
       
-      
-      
-      
-      
-      <div class="w3-container w3-card w3-white w3-round w3-margin"   ><br>
+      <div ng-repeat="forum in ctrl.forums" ng-show="currentUser.userRole=='USER' && forum.forumStatus=='A'">
+      <div class="w3-container w3-card w3-white w3-round w3-margin" ><br>
         <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">{{selectedBlog.blogDate|date}}</span>
-        <h4>{{selectedBlog.userId}}</h4><br>
+        <span class="w3-right w3-opacity">{{forum.forumCreationDate|date}}</span>
+        <h4>{{forum.userName}}</h4><br>
         <hr class="w3-clear">
-        <h4>{{selectedBlog.blogTitle}}**</h4>
-        <p>{{selectedBlog.blogContent}}</p>
-        <a ng-show="selectedBlog.blogStatus!='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.approveSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-check"></i> Approve</button> </a>
-        <a ng-show="selectedBlog.blogStatus=='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.rejectSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-close"></i> Reject</button> </a>
-        <a href=""><button type="button" ng-click="ctrl.likeSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> {{selectedBlog.blogCountLike}}Like</button> </a>
-        <br>
+        <h4>{{forum.forumName}}</h4>
+        <p>{{forum.forumDescription}}</p>
+        <a href=""><button type="button" ng-click="ctrl.likeBlog(forum,forumId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> {{blog.blogCountLike}}Like</button> </a>
+        <a href=""><button type="button" ng-click="ctrl.getSelectedForum(forum.forumId)" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-eye"></i> View</button> </a>
+         
+      </div>  
+      </div>
+      
+      
+      <div class="w3-container w3-card w3-white w3-round w3-margin" ng-repeat="forum in ctrl.forums" ng-show="currentUser.userRole=='ADMIN_USER'" ><br>
+        <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">{{forum.forumCreationDate|date}}</span>
+        <h4>{{forum.userName}}</h4><br>
+        <hr class="w3-clear">
+        <h4>{{forum.forumName}}</h4>
+        <p>{{forum.forumDescription}}</p>
+        <a ng-show="forum.forumStatus!='A'" href=""><button type="button" ng-click="ctrl.approveForum(forum,forum.forumId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-check"></i> Approve</button> </a>
+        <a ng-show="forum.forumStatus=='A'" href=""><button type="button" ng-click="ctrl.rejectForum(forum,forum.forumId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-close"></i> Reject</button> </a>
         
-        <form name="myForm" ng-show="selectedBlog.blogStatus=='A' && (currentUser.userRole=='ADMIN_USER' || currentUser.userRole=='USER')">
-		<textarea type="text" class="form-control" required placeholder="Write your comment here..." ng-model="ctrl.blogComment.blogComment" ></textarea>
-		
-		<br>
-		
-		<a href=""><button ng-show="selectedBlog.blogStatus=='A' && currentUser.userRole=='ADMIN_USER' || currentUser.userRole=='USER'" type="button" ng-click="ctrl.createBlogComment(ctrl.blogComment, selectedBlog.blogId);"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-comments-o"></i> Comment</button> </a>
-		</form>
-        
-        
-        
-        
-        
-        
+        <a href=""><button type="button" ng-click="ctrl.getSelectedForum(forum.forumId)" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-eye"></i> View</button> </a>
          
       </div>  
       
-      
-      
-      
-      
-      
-       <div class="w3-container w3-card w3-white w3-round w3-margin"  ng-repeat="blogComment in selectedBlogComments"> <br>
-        <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">{{blogComment.blogCommentDate|date}}</span>
-        <h4>{{blogComment.userName}}</h4><br>
-        <hr class="w3-clear">
-        <p>{{blogComment.blogComment}}</p>
-        
-         
-      </div> 
       
       
 	

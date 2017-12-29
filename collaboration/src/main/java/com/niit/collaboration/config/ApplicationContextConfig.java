@@ -33,20 +33,20 @@ public class ApplicationContextConfig {
 		 * bean properties, and returning a new Connection from every getConnection call.
 		 */
 				/*--- Database connection settings ---*/
-		//dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");	
+		dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");	
 		//specify the driver...
 		
-		dataSource.setDriverClassName("org.h2.Driver");
-		dataSource.setUrl("jdbc:h2:tcp://localhost/~/subhadeepdas93_4");		//specify the db_url...
-		dataSource.setUsername("sa");		//specify the db_username...
+		
+		dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:XE");		//specify the db_url...
+		dataSource.setUsername("SA");		//specify the db_username...
 		dataSource.setPassword("sa");		//specify the db_password...
 		
 
 		Properties connectionProperties = new Properties();
 		connectionProperties.setProperty("hibernate.hbm2ddl.auto", "update");
 		connectionProperties.setProperty("hibernate.show_sql", "true");
-		/*connectionProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");*/
-		connectionProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+		connectionProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
+		
 		connectionProperties.setProperty("hibernate.format_sql", "true");
 		connectionProperties.setProperty("hibernate.jdbc.use_get_generated_keys", "true");
 		dataSource.setConnectionProperties(connectionProperties);		

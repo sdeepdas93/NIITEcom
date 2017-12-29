@@ -57,6 +57,7 @@ public class JobController {
 				System.out.println(user.getUserName()+" at getJobByJobId");
 				Job job=jobDao.getJobByJobId(jobId);
 				if(job==null){
+					job=new Job();
 					job.setErrorCode("404");
 					job.setErrorMessage("job not found");
 					return new ResponseEntity<Job>(job,HttpStatus.OK);

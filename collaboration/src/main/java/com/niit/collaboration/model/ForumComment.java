@@ -5,14 +5,17 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.stereotype.Component;
 @Entity
 @Component
 public class ForumComment extends BaseDomain implements Serializable {
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="SEQ_GEN", sequenceName="SEQ_AUTO_FORUMCOMMENT_ID", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN")
 	private int forumCommentId;
 	private int forumId;
 	private String forumComment;

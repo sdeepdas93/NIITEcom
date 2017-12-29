@@ -6,7 +6,9 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
@@ -19,17 +21,20 @@ public class Forum extends BaseDomain implements Serializable {
 
 	
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="SEQ_GEN", sequenceName="SEQ_AUTO_FORUM_ID", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN")
 	private int forumId;
 	private String forumName;
 	private String forumDescription;
-	private String forumCreaterId;
+	private String userId;
+	
+	private String userName;
 	private Date forumCreationDate;
 	private String forumStatus;
-	private boolean forumEnable;
-	private String forumReason;
+
+	
 	private int forumCountComment;
-	private int forumUserCouont;
+	private int forumUserCount;
 	@Transient
 	private String forumJoiningStatus;
 	
@@ -51,12 +56,19 @@ public class Forum extends BaseDomain implements Serializable {
 	public void setForumDescription(String forumDescription) {
 		this.forumDescription = forumDescription;
 	}
-	public String getForumCreaterId() {
-		return forumCreaterId;
+	public String getUserId() {
+		return userId;
 	}
-	public void setForumCreaterId(String forumCreaterId) {
-		this.forumCreaterId = forumCreaterId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	public Date getForumCreationDate() {
 		return forumCreationDate;
 	}
@@ -69,41 +81,27 @@ public class Forum extends BaseDomain implements Serializable {
 	public void setForumStatus(String forumStatus) {
 		this.forumStatus = forumStatus;
 	}
-	public boolean isForumEnable() {
-		return forumEnable;
-	}
-	public void setForumEnable(boolean forumEnable) {
-		this.forumEnable = forumEnable;
-	}
-	public String getForumReason() {
-		return forumReason;
-	}
-	public void setForumReason(String forumReason) {
-		this.forumReason = forumReason;
-	}
-	public int getForumCountLike() {
-		return forumCountLike;
-	}
-	public void setForumCountLike(int forumCountLike) {
-		this.forumCountLike = forumCountLike;
-	}
+	
+
+
 	public int getForumCountComment() {
 		return forumCountComment;
 	}
 	public void setForumCountComment(int forumCountComment) {
 		this.forumCountComment = forumCountComment;
 	}
-	public int getForumUserCouont() {
-		return forumUserCouont;
-	}
-	public void setForumUserCouont(int forumUserCouont) {
-		this.forumUserCouont = forumUserCouont;
-	}
+	
 	public String getForumJoiningStatus() {
 		return forumJoiningStatus;
 	}
 	public void setForumJoiningStatus(String forumJoiningStatus) {
 		this.forumJoiningStatus = forumJoiningStatus;
+	}
+	public int getForumUserCount() {
+		return forumUserCount;
+	}
+	public void setForumUserCount(int forumUserCount) {
+		this.forumUserCount = forumUserCount;
 	}
 	
 	

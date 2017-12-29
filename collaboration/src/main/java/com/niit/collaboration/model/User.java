@@ -4,8 +4,10 @@ package com.niit.collaboration.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -14,33 +16,34 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Component
+@Table(name="USERS")
 public class User extends BaseDomain implements Serializable {
 	@Id
-	@NotEmpty(message="Required")
+	@Column(name ="USERID")
 	private String userId;
-	@NotEmpty(message="Required")
+	 
 	private String userPassword;
-	@NotEmpty(message="Required")
+	 
 	private String userName;
-	@NotEmpty(message="Required")
+	 
 	private String userRole;
-	@NotEmpty(message="Required")
+	 
 	private String userGender;
 	
 	private Date userDob;
-	@NotEmpty(message="Required")
+	 
 	private String userEmail;
-	@NotEmpty(message="Required")
+	 
 	private String userContactNumber;
-	@NotEmpty(message="Required")
+	 
 	private String userAddress;
-	@NotEmpty(message="Required")
+	 
 	private String userStatus;
-	@NotEmpty(message="Required")
+	 
 	private String userIsOnline;
-	@NotEmpty(message="Required")
+	 
 	private String userImage;
-	@NotEmpty(message="Required")
+	 
 	private String userDescription;
 	
 	@Transient

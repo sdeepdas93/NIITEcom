@@ -26,6 +26,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
   
   <a href="#/blogs" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Blogs"><i class="fa fa-rss"></i></a>
+  
+  <a href="#/forums" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Forums"><i class="fa fa-users"></i></a>
   <div class="w3-dropdown-hover w3-hide-small">
     <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>     
     <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
@@ -34,7 +36,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
       <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
     </div>
   </div>
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account"><img src="/w3images/avatar2.png" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a>
+  <a ng-show="! currentUser ==''" href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+  <img ng-show="currentUser.userGender == 'male'" src="resources/images/male.png" class="w3-circle" style="height:25px;width:25px" alt="Avatar">
+  <img ng-show="currentUser.userGender == 'female'" src="resources/images/female.png" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a>
+  
     <a href="#/login" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="login"><i class="fa fa-sign-in"></i></a>
  	<a href="#/register" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="register"><i class="fa fa-user-plus"></i></a>
  	<button ng-click="ctrl.logout()"class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="logout"><i class="fa fa-sign-out"></i></button>
@@ -111,6 +116,12 @@ function openNav() {
 	
 	<script src="blog/BlogController.js"></script>
 	<script src="blog/BlogService.js"></script>
+	
+	<script src="forum/ForumController.js"></script>
+	<script src="forum/ForumService.js"></script>
+	<!-- for local storage -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+	
 	
 
 </body>

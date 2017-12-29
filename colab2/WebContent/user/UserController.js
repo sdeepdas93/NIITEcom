@@ -7,8 +7,9 @@ app.controller('UserController', [
 		'UserService',
 		'$location',
 		'$rootScope',
+		'$localStorage',
 		'$window',
-		function($http, $cookieStore, $scope, UserService, $location, $rootScope, $window) {
+		function($http, $cookieStore, $scope, UserService, $location, $rootScope, $localStorage, $window) {
 			console.log("UserController....")
 			var self = this;
 			self.user = {
@@ -71,7 +72,11 @@ app.controller('UserController', [
 					} else {
 						console.log("Valid Credentials. Navigating to home page.");
 						$http.defaults.headers.common['Authorization'] = 'Basic' + $rootScope.currentUser;
+						$rootScope.currentUser=d;
 						$cookieStore.put('currentUser', $rootScope.currentUser);
+						$localStorage.newCurrentUser=$rootScope.currentUser;
+						console.log("*****Local Storage"+$localStorage.newCurrentUser.userName);
+						console.log("*****Root scope Storage"+$rootScope.currentUser.userName);
 						$location.path('/');
 					}
 				}, 
@@ -82,9 +87,12 @@ app.controller('UserController', [
 			
 			self.logout = function() {
 				console.log("--> UserController : calling logout method.");
+				UserService.logout();
 				$rootScope.currentUser = {};
 				$cookieStore.remove('currentUser');
-				UserService.logout();
+				//consol: $localStorage.currentUser.remove is not a function 
+				$localStorage.newCurrentUser.remove('currentUser');
+				
 				console.log("-->UserController : User Logged out.");
 				
 				$window.location.reload();

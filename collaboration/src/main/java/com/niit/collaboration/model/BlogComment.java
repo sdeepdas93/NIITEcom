@@ -5,7 +5,9 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BlogComment extends BaseDomain implements Serializable {
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="SEQ_GEN", sequenceName="SEQ_AUTO_BLOGCOMMENT_ID", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN")
 	private int blogCommentId;
 	private int blogId;
 	private String userId;

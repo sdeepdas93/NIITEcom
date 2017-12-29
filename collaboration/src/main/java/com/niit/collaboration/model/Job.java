@@ -5,20 +5,25 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.stereotype.Component;
 @Entity
 @Component
 public class Job extends BaseDomain implements Serializable {
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="SEQ_GEN", sequenceName="SEQ_AUTO_JOB_ID", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GEN")
+	
 	private int jobId;
 	private String jobProfile;
-	private String jobDescriptioin;
+	private String jobDescription;
 	private String jobQualification;
 	private String jobStatus;
 	private Date jobPostDate;
+	private String jobDescriptioin;
 	public int getJobId() {
 		return jobId;
 	}
@@ -31,12 +36,7 @@ public class Job extends BaseDomain implements Serializable {
 	public void setJobProfile(String jobProfile) {
 		this.jobProfile = jobProfile;
 	}
-	public String getJobDescriptioin() {
-		return jobDescriptioin;
-	}
-	public void setJobDescriptioin(String jobDescriptioin) {
-		this.jobDescriptioin = jobDescriptioin;
-	}
+	
 	public String getJobQualification() {
 		return jobQualification;
 	}
@@ -54,6 +54,18 @@ public class Job extends BaseDomain implements Serializable {
 	}
 	public void setJobPostDate(Date jobPostDate) {
 		this.jobPostDate = jobPostDate;
+	}
+	public String getJobDescription() {
+		return jobDescription;
+	}
+	public void setJobDescription(String jobDescription) {
+		this.jobDescription = jobDescription;
+	}
+	public String getJobDescriptioin() {
+		return jobDescriptioin;
+	}
+	public void setJobDescriptioin(String jobDescriptioin) {
+		this.jobDescriptioin = jobDescriptioin;
 	}
 	
 
