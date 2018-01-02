@@ -13,6 +13,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.niit.collaboration.dao.*;
 import com.niit.collaboration.model.*;
@@ -94,5 +95,13 @@ public class ApplicationContextConfig {
 	}
 	
 	
+	//<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
+	    resolver.setDefaultEncoding("utf-8");
+	    return resolver;
+	}
 	
 }

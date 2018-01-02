@@ -34,7 +34,7 @@ app.controller('UserController', [
 
 			self.fetchAllUsers = function() {
 				console.log("--> UserController : calling fetchAllUsers method.");
-				UserService.fetchAllUsers().then(function(d) {
+				UserService.fetchAllUsers().then(function (d) {
 					self.users = d;
 				}, function(errResponse) {
 					console.error('Error while fetching Users...');
@@ -48,12 +48,30 @@ app.controller('UserController', [
 							console.error('Error while creating User...');
 						});
 			};
-
+			
+			
+			self.getUserById=function(id){
+				console.log("My method getCurrentUser starting"+id);
+				UserService.getUserById(id).then(function(d){
+						self.user = d;
+			}, function(errResponse) {
+				console.error('Error while fetching User by id...');
+			}
+						
+				
+				);
+			};
+			
 			self.updateUser = function(user, id) {
 				console.log("--> UserController : calling updateUser method.");
+				
+				user.userRole=$rootScope.currentUser.userRole;
+				user.userStatus=$rootScope.currentUser.userStatus;
+				user.userIsOnline=$rootScope.currentUser.userIsOnline;
 				UserService.updateUser(user, id).then(function(d) {
-					self.users = d;
-					$location.path('/myprofile');
+					self.user = d;
+					$rootScope.currentUser=d;
+					$location.path('/');
 					}, function(errResponse) {
 						console.error('--> UserController : Error while updating User...');
 					});

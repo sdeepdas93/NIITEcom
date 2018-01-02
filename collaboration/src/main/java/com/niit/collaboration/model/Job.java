@@ -19,11 +19,11 @@ public class Job extends BaseDomain implements Serializable {
 	
 	private int jobId;
 	private String jobProfile;
-	private String jobDescription;
+	
 	private String jobQualification;
 	private String jobStatus;
 	private Date jobPostDate;
-	private String jobDescriptioin;
+	private String jobDescription;
 	public int getJobId() {
 		return jobId;
 	}
@@ -61,12 +61,7 @@ public class Job extends BaseDomain implements Serializable {
 	public void setJobDescription(String jobDescription) {
 		this.jobDescription = jobDescription;
 	}
-	public String getJobDescriptioin() {
-		return jobDescriptioin;
-	}
-	public void setJobDescriptioin(String jobDescriptioin) {
-		this.jobDescriptioin = jobDescriptioin;
-	}
+	
 	
 
 }

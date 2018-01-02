@@ -32,6 +32,7 @@ public class JobController {
 	
 	@GetMapping(value = "/jobs")
 	public ResponseEntity<List<Job>> listJobs(HttpSession session) {
+		System.out.println("at job list");
 		try{
 		User user=(User) session.getAttribute("loggedInUser");
 		if(user==null)  return new ResponseEntity<List<Job>>(HttpStatus.NO_CONTENT);
@@ -40,7 +41,13 @@ public class JobController {
 			return new ResponseEntity<List<Job>>(HttpStatus.NO_CONTENT);
 		}
 		
-
+		System.out.println("jobs are getting returned");
+		//testing
+		for(Job job:jobs)
+			System.out.println(job.getJobDescription());
+		
+		
+		//testing
 		return new ResponseEntity<List<Job>>(jobs, HttpStatus.OK);
 		}catch(NullPointerException e){
 			System.out.println("user not logged in");

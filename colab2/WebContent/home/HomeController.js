@@ -21,5 +21,5 @@ app.controller('HomeController', [
 				return $localStorage.currentUser;
 			}
         	self.getCurrentUser();
-        	
+        	$location.path('/blogs');
 		} ]);

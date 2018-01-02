@@ -1,84 +1,143 @@
-<div class="container">
-	<div class="row row-profile">
-		<div class="col-md-8 col-md-offset-2 profile-base">
-			<fieldset>
-				<legend>
-					<span>My Profile</span>
-					<button class="btn btn-success btn-edit" 
-							ng-click="ctrl.updateUser(currentUser, currentUser.id)">Save Profile</button>
-				</legend>
-				<div>
-					<form class="col-md-8 form-profile">
-						<div class="one-profile">
-							<div class="col-md-4">
-								<a class="floatleft">User ID</a>
-							</div>
-							<div class="col-md-8">
-								<label class="floatleft" > : {{currentUser.id}}</label>
-							</div>
+<!-- The Grid -->
+  <div class="w3-row">
+ <!-- Left Column -->
+    <div class="w3-col m3" ng-show="currentUser.userIsOnline =='ONLINE'">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white" ng-show="currentUser.userIsOnline =='ONLINE'">
+        <div class="w3-container">
+         <h4 class="w3-center">{{currentUser.userName}}</h4>
+         <p class="w3-center"><img src="resources/images/{{currentUser.userGender}}.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <hr>
+         
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userAddress}}</p>
+         <p><i class="fa fa-mobile fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userContactNumber}}</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userDob|date}}</p>
+         <p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userDescription}}</p>
+        </div>
+      </div>
+      <br>
+      
+      <!-- Accordion -->
+      <div class="w3-card w3-round">
+        <div class="w3-white">
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Forums</button>
+          <div id="Demo1" class="w3-hide w3-container">
+            <p>Some text..</p>
+          </div>
+          <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Blogs</button>
+          <div id="Demo2" class="w3-hide w3-container">
+            <p>Some other text..</p>
+          </div>
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Friends</button>
+          <div id="Demo3" class="w3-hide w3-container">
+         <div class="w3-row-padding">
+         <br>
+          
+         </div>
+          </div>
+        </div>      
+      </div>
+      <br>
+      
+      
+      
+    
+    <!-- End Left Column -->
+    </div>
+    
+ <!-- Middle Column -->
+    <div class="w3-col m9" >
+    
+      <div class="w3-row-padding">
+        <div class="w3-col m12">
+          <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+              <h6 class="w3-opacity">Update your profile</h6>
+			  <div ng-show='ctrl.user.errorMessage!=""'>
+						<div class="alart alart-danger fade in">
+							Error :	{{ctrl.user.errorMessage}}
 						</div>
-						<div class="one-profile">
-							<div class="col-md-4">
-								<a class="floatleft">User Name</a>
-							</div>
-							<div class="col-md-8">
-								<label class="floatleft"> : 
-									<input type="text" name="name" required pattern=".{5,50}"
-										placeholder="{{currentUser.name}}" ng-model="currentUser.name" />
-								</label>
-							</div>
-						</div>
-						<div class="one-profile">
-							<div class="col-md-4">
-								<a class="floatleft">Gender</a>
-							</div>
-							<div class="col-md-8">
-								<label class="floatleft"> : 
-									<input type="radio" name="gender" id="gender" value="male"
-										ng-model="currentUser.gender" required> Male 
-									<input type="radio" name="gender" id="gender" value="female"
-										ng-model="currentUser.gender" required> Female
-								</label>
-							</div>
-						</div>
-						<div class="one-profile">
-							<div class="col-md-4">
-								<a class="floatleft">Email Id</a>
-							</div>
-							<div class="col-md-8">
-								<label class="floatleft"> : 
-									<input type="email" name="email" id="email" required pattern=".{5,50}"
-										placeholder="{{currentUser.email}}" ng-model="currentUser.email" />
-								</label>
-							</div>
-						</div>
-						<div class="one-profile">
-							<div class="col-md-4">
-								<a class="floatleft">Phone No.</a>
-							</div>
-							<div class="col-md-8">
-								<label class="floatleft"> : 
-									<input type="tel" name="phone" id="phone" required pattern=".{10}"
-										placeholder="{{currentUser.phone}}" ng-model="currentUser.phone" />
-								</label>
-							</div>
-						</div>
-						<div class="one-profile">
-							<div class="col-md-4">
-								<a class="floatleft">Role in Binder</a>
-							</div>
-							<div class="col-md-8">
-								<label class="floatleft" > : {{currentUser.role}}</label>
-							</div>
-						</div>
-					</form>
-					<div class="col-md-4">
-						<img
-							src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-							class="profile-img">
 					</div>
-				</div>
-			</fieldset>
-		</div>
-	</div>
-</div>
+					<fieldset>
+						<legend>Update Profile</legend>
+						<div class="form-inner">
+							<form ng-submit="ctrl.updateUser(ctrl.user,currentUser.userId)" name="myForm"
+								class="form-horizontal">
+								
+
+								
+								<br>
+								<div class="one-half">
+									<input type="text" name="name" required pattern=".{5,50}"
+										ng-minlength="5" placeholder="User Name"
+										ng-model="ctrl.user.userName" class="form-control" />
+								</div>
+								<br>
+								<div class="one-half">
+									<textarea rows="4" name="address" required 
+										ng-minlength="5" placeholder="Address"
+										ng-model="ctrl.user.userAddress" class="form-control">
+										</textarea>
+								</div>
+								<br>
+								<div class="one-half">
+									<textarea rows="4" name="descriptioinhgfghdfuy" required 
+										ng-minlength="5" placeholder="Description"
+										ng-model="ctrl.user.userDescription" class="form-control">
+										</textarea>
+								</div>
+								<br>
+								<div class="one-half">
+									<input type="password" name="password" required pattern=".{5,15}"
+										ng-minlength="5" placeholder="Password"
+										ng-model="ctrl.user.userPassword" class="form-control"/>
+								</div>
+								<br>
+								<div class="one-half">
+									<input type="email" name="email" id="email" required pattern=".{5,50}"
+										placeholder="Email Id" ng-model="ctrl.user.userEmail" class="form-control"/>
+								</div>
+								<br>
+								<div class="one-half">
+									<input type="tel" name="phone" id="phone" required pattern=".{10}"
+										placeholder="Phone No" ng-model="ctrl.user.userContactNumber" class="form-control"/>
+								</div>
+								<br>
+								<div class="one-half">
+									<input type="date" name="dob" id="dob" 
+										placeholder="Phone No" ng-model="ctrl.user.userDob" class="form-control"/>
+								</div>
+								<br>
+								<div class="one-half">
+									<input type="radio" name="gender" id="gender" value="male"
+										ng-model="ctrl.user.userGender" > Male 
+									<input type="radio" name="gender" id="gender" value="female"
+										ng-model="ctrl.user.userGender" > Female
+								
+								
+										<button type="button" class="w3-button w3-theme btn kp-button" value="reset" ng-click="ctrl.reset()"><i class="fa fa-refresh"></i> Reset form</button>
+										<button type="submit" class="w3-button w3-theme btn kp-button" value="Update"><i class="fa fa-refresh"></i> Update</button>
+										<button type="button" class="w3-button w3-theme btn kp-button" value="Populate" ng-click="ctrl.getUserById(currentUser.userId)"><i class="fa fa-refresh"></i> Populate</button>
+								</div>
+							</form>
+						</div>
+					</fieldset>
+
+              
+               
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    <!-- End Middle Column -->
+    </div>
+
+    
+
+    
+  <!-- End Grid -->
+  </div>
+  

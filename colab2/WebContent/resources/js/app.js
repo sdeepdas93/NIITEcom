@@ -13,36 +13,23 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 	})
 
 		
-	/**
-	 * Blog related mapping
-	 */
 
-	.when('/create_blog', {
-		templateUrl : 'b_blog/create_blog.html',
-		controller : 'BlogController as ctrl'
-	})
-	.when('/create_forum', {
-		templateUrl : 'b_forum/create_forum.html',
-		controller : 'ForumController as ctrl'
-	})
+
 
 	
 	
-.when('/list_forums', {
-		templateUrl : 'b_forum/list_forums.html',
-		controller : 'ForumController as ctrl'
-	})
-	
-.when('/view_forum', {
-		templateUrl : 'b_forum/view_forum.html',
-		controller : 'ForumController as ctrl'
-	})
+
 	
 	/*for user edited 12/06/17*/
 .when('/login', {
 		templateUrl : 'user/login.html',
 		controller : 'UserController as ctrl'
 	})
+	
+.when('/editprofile', {
+		templateUrl : 'user/editprofile.html',
+		controller : 'UserController as ctrl'
+	})	
 		
 .when('/register', {
 		templateUrl : 'user/register.html',
@@ -69,6 +56,16 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 		controller : 'ForumController as ctrl'
 	})
 	
+	
+	.when('/jobs', {
+		templateUrl : 'job/jobList.html',
+		controller : 'JobController as ctrl'
+	})
+
+.when('/file', {
+		templateUrl : 'f_file/file_upload.html',
+		controller : 'FileUploadController as ctrl'
+	})
 	
 	//forum 28/12/2017
 
