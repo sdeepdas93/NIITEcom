@@ -117,9 +117,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {		//run() block gi
 
 
 	// keep user logged in after page refresh...
-	/*
-	 * $rootScope.currentUser = $cookieStore.get('currentUser') || {}; if
-	 * ($rootScope.currentUser) { $http.defaults.header.common['Authorization'] =
-	 * 'Basic' + $rootScope.currentUser; }
-	 */
-});  // app.run
+	
+	 $rootScope.currentUser = $cookieStore.get('currentUser');
+	 
+});   

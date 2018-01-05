@@ -100,7 +100,7 @@ public class UserController {
 	
 	@PostMapping(value = "/user/")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
-		if(userDao.getUserByUserId(user.getUserId())==null){
+		if(userDao.getUserByUserId(user.getUserId())!=null){
 			System.out.println("at create user");
 			user.setUserStatus("A");
 			user.setUserRole("USER");

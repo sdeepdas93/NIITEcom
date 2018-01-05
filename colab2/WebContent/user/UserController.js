@@ -92,8 +92,8 @@ app.controller('UserController', [
 						$http.defaults.headers.common['Authorization'] = 'Basic' + $rootScope.currentUser;
 						$rootScope.currentUser=d;
 						$cookieStore.put('currentUser', $rootScope.currentUser);
-						$localStorage.newCurrentUser=$rootScope.currentUser;
-						console.log("*****Local Storage"+$localStorage.newCurrentUser.userName);
+						//$localStorage.newCurrentUser=$rootScope.currentUser;
+						//console.log("*****Local Storage"+$localStorage.newCurrentUser.userName);
 						console.log("*****Root scope Storage"+$rootScope.currentUser.userName);
 						$location.path('/');
 					}
@@ -109,7 +109,7 @@ app.controller('UserController', [
 				$rootScope.currentUser = {};
 				$cookieStore.remove('currentUser');
 				//consol: $localStorage.currentUser.remove is not a function 
-				$localStorage.newCurrentUser.remove('currentUser');
+				//$localStorage.newCurrentUser.remove('currentUser');
 				
 				console.log("-->UserController : User Logged out.");
 				
