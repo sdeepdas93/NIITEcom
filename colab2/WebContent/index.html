@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
-<title>NIIT COLAB</title>
+<title>COLAB</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
@@ -20,13 +21,16 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <div class="w3-top" ng-controller="UserController as ctrl">
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>NIIT COLAB</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>COLAB</a>
  <!--  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
   --> 
+  
+  <a href="#/chat" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Chat"><i class="fa fa-commenting-o"></i></a>
   <a href="#/blogs" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Blogs"><i class="fa fa-rss"></i></a>
   <a href="#/jobs" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Jobs"><i class="fa fa-briefcase"></i></a>
+  <a href="#/users" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Frieds Search"><i class="fa fa-users"></i></a>
   
   <a href="#/forums" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Forums"><i class="fa fa-users"></i></a>
   <!-- <div class="w3-dropdown-hover w3-hide-small">
@@ -66,10 +70,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 <!-- Footer -->
 <footer class="w3-container w3-theme-d3 w3-padding-16">
-  <h5>Footer</h5>
+  <h5>.</h5>
 </footer>
 
-<footer class="w3-container w3-theme-d5">
+<footer class="w3-container w3-theme-d5" >
   <p>NIIT COLAB <a href="https://www.linkedin.com/in/subhadeep-das-972a62bb/" target="_blank">by Subhadeep Das</a></p>
 </footer>
  
@@ -132,9 +136,20 @@ function openNav() {
 	
 	<!-- for local storage -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.7.1/angular-local-storage.js"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.7.1/angular-local-storage.js"></script>
 	
 	
+	<script src="resources/js/sockjs-0.3.4.js"></script>
+	<script src="resources/js/stomp.js"></script>
+	<script src="b_chat/ForUserService.js"></script>
+	
+	
+		<!-- chat related js files -->
+	<script src="b_chat/ChatController.js"></script>
+	<script src="b_chat/ChatService.js"></script>
+	
+	
+
 
 </body>
 </html> 

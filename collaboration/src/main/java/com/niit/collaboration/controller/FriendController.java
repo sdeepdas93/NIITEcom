@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,28 +26,31 @@ public class FriendController {
 	FriendListDao friendListDao;
 	
 	
-	@PostMapping(value="/sendFriendRequest/")
-	public ResponseEntity<FriendList> sendFriendRequest(@RequestBody FriendList friendList,HttpSession session){
+	@PostMapping(value="/sendFriendRequest/{friendId}")
+	public ResponseEntity<FriendList> sendFriendRequest(@PathVariable("friendId") String friendId,HttpSession session){
 		try{
 			User user=(User) session.getAttribute("loggedInUser");
+			FriendList friendList=new FriendList();
 			
-			if((friendListDao.getFriendListifExistByUsers(friendList.getUserId(),friendList.getFriendId())!=null)||
+			if((friendListDao.getFriendListifExistByUsers(user.getUserId(),friendId)!=null)||
 				(friendList.getUserId().equals(user.getUserId()))){
 				friendList.setErrorCode("404");
 				friendList.setErrorMessage("FriendRequest Not Created");
 				return new ResponseEntity<FriendList>(friendList,HttpStatus.OK);
 				
 			}
+			friendList.setFriendListStatus("N");
+			friendListDao.SavefriendList(friendList);
+			return new ResponseEntity<FriendList>(friendList,HttpStatus.OK);
 		}
 		catch(NullPointerException e){
+			FriendList friendList=new FriendList();
 			friendList.setErrorCode("404");
 			friendList.setErrorMessage("user Not logged in");
 			return new ResponseEntity<FriendList>(friendList,HttpStatus.OK);
 			
 		}
-		friendList.setFriendListStatus("N");
-		friendListDao.SavefriendList(friendList);
-		return new ResponseEntity<FriendList>(friendList,HttpStatus.OK);
+		
 		
 		
 		

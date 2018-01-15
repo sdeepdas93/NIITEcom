@@ -31,14 +31,17 @@
 		</property>
 	</bean>
 
-	<!-- declare websocket configuration for chatting mechanism 
+<!-- declare websocket configuration for chatting mechanism -->
 	<websocket:message-broker application-destination-prefix="/app">
        <websocket:stomp-endpoint path="/chat">
             <websocket:sockjs/>
        </websocket:stomp-endpoint>
        <websocket:simple-broker prefix="/topic"/>
-	</websocket:message-broker>-->
+	</websocket:message-broker>
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+
+	
 	
 </beans>

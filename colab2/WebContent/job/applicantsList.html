@@ -1,6 +1,6 @@
 <!-- The Grid -->
   <div class="w3-row">
-   <!-- Left Column -->
+ <!-- Left Column -->
     <div class="w3-col m3" ng-show="currentUser.userIsOnline =='ONLINE'">
       <!-- Profile -->
       <div class="w3-card w3-round w3-white" ng-show="currentUser.userIsOnline =='ONLINE'">
@@ -48,50 +48,42 @@
     <!-- Middle Column -->
     <div class="w3-col m9">
     
+    
       
       
-      <div class="w3-container w3-card w3-white w3-round w3-margin"   ><br>
-        <img src="resources/images/male.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">{{selectedforum.forumCreationDate|date}}</span>
-        <h4>{{selectedForum.userId}}</h4><br>
+      
+      
+      
+      
+      
+      <div class="w3-container w3-card w3-white w3-round w3-margin" ><br>
+        <img src="resources/images/job.png" alt="Avatar" class="w3-left  w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">{{selectedJob.jobPostDate|date}}</span>
+        <h4>Job Profile: {{selectedJob.jobProfile}}</h4><br>
         <hr class="w3-clear">
-        <h4>{{selectedForum.forumName}}</h4>
-        <p>{{selectedForum.forumDescription}}</p>
-         <a ng-show="selectedBlog.blogStatus!='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.approveSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-check"></i> Approve</button> </a>
-        <a ng-show="selectedBlog.blogStatus=='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.rejectSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-close"></i> Reject</button> </a>
+        <h4>Qualification: {{selectedJob.jobQualification}}</h4>
+        <p>Description: {{selectedJob.jobDescription}}</p>
       
-        <br>
-        
-        <form name="myForm" ng-show="selectedForum.forumStatus=='A' && (currentUser.userRole=='ADMIN_USER' || currentUser.userRole=='USER')">
-		<textarea type="text" class="form-control" required placeholder="Write your comment here..." ng-model="ctrl.forumComment.forumComment" ></textarea>
-		
-		<br>
-		
-		<a href=""><button  type="button" ng-click="ctrl.createForumComment(ctrl.forumComment, selectedForum.forumId);"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-comments-o"></i> Comment</button> </a>
-		</form> 
-        
-        
-        
-        
-        
-        
+       
          
       </div>  
       
       
-      
-      
-      
-      
-       <div class="w3-container w3-card w3-white w3-round w3-margin"  ng-repeat="forumComment in selectedForumComments"> <br>
-        <img src="resources/images/male.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">{{forumComment.forumCommentDate|date}}</span>
-        <h4>{{forumComment.userName}}</h4><br>
+       <div ng-repeat="jobApplication in jobApplications">
+      <div class="w3-container w3-card w3-white w3-round w3-margin" ><br>
+        <img src="resources/images/job.png" alt="Avatar" class="w3-left  w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">{{job.jobPostDate|date}}</span>
+        <h4>Job Applicant: {{jobApplication.userId}}</h4><br>
         <hr class="w3-clear">
-        <p>{{forumComment.forumComment}}</p>
         
+        <a href=""><button type="button" ng-click="ctrl.viewProfile(jobApplication.userId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-user"></i> View Profile</button> </a>
+       
          
-      </div> 
+      </div>  
+      </div>
+      
+      
+      
       
       
 	
@@ -100,8 +92,7 @@
     <!-- End Middle Column -->
     </div>
     
-
-    
+       
   <!-- End Grid -->
   </div>
   

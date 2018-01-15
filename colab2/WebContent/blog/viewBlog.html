@@ -59,11 +59,11 @@
       
       
       <div class="w3-container w3-card w3-white w3-round w3-margin"   ><br>
-        <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+        <img src="resources/images/male.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
         <span class="w3-right w3-opacity">{{selectedBlog.blogDate|date}}</span>
         <h4>{{selectedBlog.userId}}</h4><br>
         <hr class="w3-clear">
-        <h4>{{selectedBlog.blogTitle}}**</h4>
+        <h4>{{selectedBlog.blogTitle}}</h4>
         <p>{{selectedBlog.blogContent}}</p>
         <a ng-show="selectedBlog.blogStatus!='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.approveSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-check"></i> Approve</button> </a>
         <a ng-show="selectedBlog.blogStatus=='A' && currentUser.userRole=='ADMIN_USER'" href=""><button type="button" ng-click="ctrl.rejectSelectedBlog(selectedBlog,selectedBlog.blogId)"  class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-close"></i> Reject</button> </a>
@@ -92,7 +92,7 @@
       
       
        <div class="w3-container w3-card w3-white w3-round w3-margin"  ng-repeat="blogComment in selectedBlogComments"> <br>
-        <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+        <img src="resources/images/male.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
         <span class="w3-right w3-opacity">{{blogComment.blogCommentDate|date}}</span>
         <h4>{{blogComment.userName}}</h4><br>
         <hr class="w3-clear">

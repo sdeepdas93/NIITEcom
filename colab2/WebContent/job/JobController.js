@@ -46,6 +46,26 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 		};		
 		self.listJobs();
 		
+		
+		self.listJobApplications = function(id) {
+			console.log("-->JobController : calling 'listJobs' method.");
+			JobService
+						.listJobApplications(id)
+						.then(function(d) {
+							self.getJob(id);
+							
+							self.jobApplications = d;
+							$rootScope.jobApplications=d;
+							$location.path('/applicants');
+						},
+						function(errResponse) {
+							console.error("Error while getting job list.")
+						});
+		};
+		
+		
+		//listJobApplications
+		
 
 		
 		self.createJob = function(job) {
@@ -70,7 +90,7 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 						.getJob(jobId)
 						.then(function(d) {
 							self.job = d;
-							$location.path('/view_job');
+							
 						},
 						function(errResponse) {
 							console.error('Error while fetching job details...')
@@ -137,5 +157,23 @@ app.controller('JobController', ['JobService', '$scope', '$location', '$rootScop
 			};
 			$scope.myForm.$setPristine();	//reset form...
 		};
+		
+		//****************************
+		self.viewProfile = function(id) {
+			console.log("-->JobController : calling 'viewProfile' method.");
+			JobService
+						.getUserById(id)
+						.then(function(d) {
+							
+							
+							
+							$rootScope.selectedUser=d;
+							$location.path('/viewProfile');
+						},
+						function(errResponse) {
+							console.error("Error while getting selected user")
+						});
+		};
+		
 
 	}]);

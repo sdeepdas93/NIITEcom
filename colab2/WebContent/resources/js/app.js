@@ -36,6 +36,17 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 		controller : 'UserController as ctrl'
 	})
 	
+	
+.when('/viewProfile', {
+	templateUrl : 'user/viewProfile.html',
+	controller : 'UserController as ctrl'
+	})
+	
+.when('/users', {
+templateUrl : 'user/userList.html',
+controller : 'UserController as ctrl'
+})
+	
 	/*blog edited on 12/07/2017*/
 .when('/blogs', {
 		templateUrl : 'blog/bloglist.html',
@@ -61,10 +72,23 @@ app.config(function($routeProvider) {		//We can use config() block to inject onl
 		templateUrl : 'job/jobList.html',
 		controller : 'JobController as ctrl'
 	})
+	
+	.when('/applicants', {
+		templateUrl : 'job/applicantsList.html',
+		controller : 'JobController as ctrl'
+	})
+	
+	
 
 .when('/file', {
 		templateUrl : 'f_file/file_upload.html',
 		controller : 'FileUploadController as ctrl'
+	})
+	
+	
+.when('/chat', {
+		templateUrl : 'b_chat/chat.html',
+		controller : 'ChatController'
 	})
 	
 	//forum 28/12/2017
@@ -92,7 +116,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {		//run() block gi
 
 		                                                   	'/blogs', 
 		                                                   	'/viewBlog',
-		                                                   	
+		                                                   	'/chat',
 		                                                   	
 		                                                 
 		                                                   '/about', 

@@ -12,7 +12,9 @@ app.factory('UserService', ['$http', '$q', '$rootScope',
 				return $http
 							.get(BASE_URL+'/users')
 							.then(function(response) {
+								$rootScope.users=response.data;
 								return response.data;
+								
 							},
 							function(errResponse) {
 								console.error('Error while fetching UserDetails...');

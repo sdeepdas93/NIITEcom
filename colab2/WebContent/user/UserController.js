@@ -36,6 +36,8 @@ app.controller('UserController', [
 				console.log("--> UserController : calling fetchAllUsers method.");
 				UserService.fetchAllUsers().then(function (d) {
 					self.users = d;
+					
+					console.log("--> UserController : end of fetchAllUsers.");
 				}, function(errResponse) {
 					console.error('Error while fetching Users...');
 				});
@@ -49,6 +51,21 @@ app.controller('UserController', [
 						});
 			};
 			
+			self.viewProfile = function(id) {
+				console.log("-->JobController : calling 'viewProfile' method.");
+				UserService
+							.getUserById(id)
+							.then(function(d) {
+								
+								
+								
+								$rootScope.selectedUser=d;
+								$location.path('/viewProfile');
+							},
+							function(errResponse) {
+								console.error("Error while getting selected user")
+							});
+			};
 			
 			self.getUserById=function(id){
 				console.log("My method getCurrentUser starting"+id);

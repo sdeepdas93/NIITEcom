@@ -1,0 +1,80 @@
+<!-- The Grid -->
+  <div class="w3-row">
+ <!-- Left Column -->
+    <div class="w3-col m3" ng-show="currentUser.userIsOnline =='ONLINE'">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white" ng-show="currentUser.userIsOnline =='ONLINE'">
+        <div class="w3-container">
+         <h4 class="w3-center">{{currentUser.userName}}</h4>
+         <p class="w3-center"><img src="resources/images/{{currentUser.userGender}}.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <hr>
+         
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userAddress}}</p>
+         <p><i class="fa fa-mobile fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userContactNumber}}</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userDob|date}}</p>
+         <p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i> {{currentUser.userDescription}}</p>
+        </div>
+      </div>
+      <br>
+      
+      <!-- Accordion -->
+      <div class="w3-card w3-round">
+        <div class="w3-white">
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Forums</button>
+          <div id="Demo1" class="w3-hide w3-container">
+            <p>Some text..</p>
+          </div>
+          <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Blogs</button>
+          <div id="Demo2" class="w3-hide w3-container">
+            <p>Some other text..</p>
+          </div>
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Friends</button>
+          <div id="Demo3" class="w3-hide w3-container">
+         <div class="w3-row-padding">
+         <br>
+          
+         </div>
+          </div>
+        </div>      
+      </div>
+      <br>
+      
+      
+      
+    
+    <!-- End Left Column -->
+    </div>
+    
+ <!-- Middle Column -->
+    <div class="w3-col m9" >
+    
+    <div class="w3-container w3-card w3-white w3-round w3-margin"   ><br>
+    	<h1>View Selected Profile</h1>
+    	<br>
+    	<hr>
+    	 <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center">{{selectedUser.userName}}</h4>
+         <p class="w3-center"><img src="resources/images/{{selectedUser.userGender}}.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <hr>
+         
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{selectedUser.userAddress}}</p>
+         <p><i class="fa fa-mobile fa-fw w3-margin-right w3-text-theme"></i> {{selectedUser.userContactNumber}}</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> {{selectedUser.userDob|date}}</p>
+         <p><i class="fa fa-address-card fa-fw w3-margin-right w3-text-theme"></i> {{selectedUser.userDescription}}</p>
+        </div>
+    </div>
+    
+   
+      
+    
+          <!-- End Middle Column -->
+    </div>
+
+    
+
+    
+  <!-- End Grid -->
+  </div>
+  
